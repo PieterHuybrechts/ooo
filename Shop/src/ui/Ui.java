@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.JOptionPane;
 
+import domain.Product;
 import domain.Shop;
 
 public class Ui {
@@ -34,15 +35,45 @@ public class Ui {
 	}
 	
 	private void showAddproduct(){
+		String title = JOptionPane.showInputDialog("Enter the title:");
+		String id = JOptionPane.showInputDialog("Enter the id:");
+		String type = JOptionPane.showInputDialog("Enter the type (M for movie/G for game):");
+		Product p;
 		
+		if(type.toLowerCase().equals("m")){
+			p = new Movie(title,id);
+		}else if(type.toLowerCase().equals("g")){
+			p= new Game(title,id);
+		}
+		
+		this.shop.addProduct(p);
 	}
 	
 	private void showProduct(){
+		String id = JOptionPane.showInputDialog("Enter the id:");
+		int idx = -1;
 		
+		Product p = null;
+		p=shop.getProduct(Integer.parseInt(id));
+		
+		if(p!=null)
+		{
+			JOptionPane.showMessageDialog(null, p.getTitle());
+		}
 	}
 	
 	private void showPrice(){
+		String id = JOptionPane.showInputDialog("Enter the id:");
+		int idx = -1;
 		
+		Product p = null;
+		p=shop.getProduct(Integer.parseInt(id));
+		
+		if(p!=null){
+			String daysString = JOptionPane.showInputDialog("Enter the number of days:");
+			int days = Integer.parseInt(daysString);
+			JOptionPane.showMessageDialog(null, p.getPrice(days));
+		}
 	}
 	
 }
