@@ -22,7 +22,10 @@ public class Shop {
 	}
 	
 	public Product getProduct(int id){
-		return products.get(id);
+		Product p = null;
+		p = products.get(new Integer(id));
+		
+		return p;
 	}
 	
 }
