@@ -2,6 +2,9 @@ package ui;
 
 import javax.swing.JOptionPane;
 
+import domain.DomainException;
+import domain.Game;
+import domain.Movie;
 import domain.Product;
 import domain.Shop;
 
@@ -9,7 +12,7 @@ public class Ui {
 	
 	private Shop shop;
 	
-	public Ui(Shop shop){
+	public Ui(Shop shop) throws DomainException{
 		setShop(shop);
 		showMenu();
 	}
@@ -18,7 +21,7 @@ public class Ui {
 		this.shop=shop;
 	}
 	
-	private void showMenu(){
+	private void showMenu() throws DomainException{
 		String menu = "1. Add product\n2. Show product\n3. Show rental price\n\n0. Quit";
 		int choice = -1;
 		while (choice != 0) {
@@ -34,16 +37,16 @@ public class Ui {
 		}
 	}
 	
-	private void showAddproduct(){
+	private void showAddproduct() throws DomainException{
 		String title = JOptionPane.showInputDialog("Enter the title:");
-		String id = JOptionPane.showInputDialog("Enter the id:");
+		int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
 		String type = JOptionPane.showInputDialog("Enter the type (M for movie/G for game):");
-		Product p;
+		Product p=null;
 		
 		if(type.toLowerCase().equals("m")){
-			p = new Movie(title,id);
+			p = new Movie(id,title);
 		}else if(type.toLowerCase().equals("g")){
-			p= new Game(title,id);
+			p= new Game(id,title);
 		}
 		
 		this.shop.addProduct(p);
@@ -58,7 +61,7 @@ public class Ui {
 		
 		if(p!=null)
 		{
-			JOptionPane.showMessageDialog(null, p.getTitle());
+			JOptionPane.showMessageDialog(null, p.title());
 		}
 	}
 	
