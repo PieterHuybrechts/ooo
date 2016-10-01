@@ -54,7 +54,6 @@ public class Ui {
 	
 	private void showProduct(){
 		String id = JOptionPane.showInputDialog("Enter the id:");
-		int idx = -1;
 		
 		Product p = null;
 		p=shop.getProduct(Integer.parseInt(id));
@@ -67,8 +66,7 @@ public class Ui {
 	
 	private void showPrice(){
 		String id = JOptionPane.showInputDialog("Enter the id:");
-		int idx = -1;
-		
+	
 		Product p = null;
 		p=shop.getProduct(Integer.parseInt(id));
 		

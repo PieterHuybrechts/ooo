@@ -26,13 +26,13 @@ public class ShopTest {
 	}
 	
 	@Test
-	public void testAddProductSucceed(){
+	public void testAddProductSucceed() throws DomainException{
 		Product p = new Movie(0,"title");
 		shop.addProduct(p);
 	}
 	
 	@Test (expected=DomainException.class)
-	public void testAddProductWithExistingId(){
+	public void testAddProductWithExistingId() throws DomainException{
 		Product p = new Movie(0,"title");
 		shop.addProduct(p);
 		
@@ -41,7 +41,7 @@ public class ShopTest {
 	}
 	
 	@Test
-	public void testGetProductSucceed(){
+	public void testGetProductSucceed() throws DomainException{
 		Product expected = new Movie(0,"title");
 		shop.addProduct(expected);
 		
