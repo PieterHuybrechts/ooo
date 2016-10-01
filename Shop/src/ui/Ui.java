@@ -6,6 +6,7 @@ import domain.DomainException;
 import domain.Game;
 import domain.Movie;
 import domain.Product;
+import domain.ProductStateEnum;
 import domain.Shop;
 
 public class Ui {
@@ -44,9 +45,9 @@ public class Ui {
 		Product p=null;
 		
 		if(type.toLowerCase().equals("m")){
-			p = new Movie(id,title);
+			p = new Movie(id,title,ProductStateEnum.RENTABLE.getState());
 		}else if(type.toLowerCase().equals("g")){
-			p= new Game(id,title);
+			p= new Game(id,title,ProductStateEnum.RENTABLE.getState());
 		}
 		
 		this.shop.addProduct(p);
@@ -60,7 +61,7 @@ public class Ui {
 		
 		if(p!=null)
 		{
-			JOptionPane.showMessageDialog(null, p.title());
+			JOptionPane.showMessageDialog(null, p.getTitle());
 		}
 	}
 	

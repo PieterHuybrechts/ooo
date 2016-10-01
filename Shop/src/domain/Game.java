@@ -10,8 +10,8 @@ public class Game extends Product {
 		super();
 	}
 			
-	public Game (int id, String title) throws DomainException{
-		super (title,id);
+	public Game (int id, String title, ProductState pS) throws DomainException{
+		super (title,id,pS);
 	}
 
 }
