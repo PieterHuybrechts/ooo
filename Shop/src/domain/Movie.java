@@ -17,7 +17,7 @@ public class Movie extends Product{
 		super();
 	}
 	
-	public Movie (int id, String title, ProductState pS) throws DomainException{
-		super (title,id,pS);
+	public Movie (int id, String title, ProductStateEnum state) throws DomainException{
+		super (title,id,state);
 	}
 }

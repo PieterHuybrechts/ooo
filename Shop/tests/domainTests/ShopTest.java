@@ -28,22 +28,22 @@ public class ShopTest {
 	
 	@Test
 	public void testAddProductSucceed() throws DomainException{
-		Product p = new Movie(0,"title",ProductStateEnum.RENTABLE.getState());
+		Product p = new Movie(0,"title",ProductStateEnum.RENTABLE);
 		shop.addProduct(p);
 	}
 	
 	@Test (expected=DomainException.class)
 	public void testAddProductWithExistingId() throws DomainException{
-		Product p = new Movie(0,"title",ProductStateEnum.RENTABLE.getState());
+		Product p = new Movie(0,"title",ProductStateEnum.RENTABLE);
 		shop.addProduct(p);
 		
-		Product p2 = new Game(0,"title",ProductStateEnum.RENTABLE.getState());
+		Product p2 = new Game(0,"title",ProductStateEnum.RENTABLE);
 		shop.addProduct(p2);
 	}
 	
 	@Test
 	public void testGetProductSucceed() throws DomainException{
-		Product expected = new Movie(0,"title",ProductStateEnum.RENTABLE.getState());
+		Product expected = new Movie(0,"title",ProductStateEnum.RENTABLE);
 		shop.addProduct(expected);
 		
 		Product actual = shop.getProduct(0);
@@ -51,9 +51,9 @@ public class ShopTest {
 		assertEquals(expected, actual);
 	}
 	
-	@Test
-	public void testGetProductWithNonExistingId(){
-		assertEquals(null, shop.getProduct(987));
+	@Test (expected=DomainException.class)
+	public void testGetProductWithNonExistingId() throws DomainException{
+		shop.getProduct(987);
 	}
 	
 }

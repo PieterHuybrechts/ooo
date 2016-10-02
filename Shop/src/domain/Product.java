@@ -3,17 +3,16 @@ package domain;
 public abstract class Product {
 	private int id;
 	private String title;
-
-	private ProductState currentState;
+	private ProductStateEnum currentState;
 
 	public Product(){
 		
 	}
 	
-	public Product(String title, int id, ProductState pS) throws DomainException {
+	public Product(String title, int id, ProductStateEnum state) throws DomainException {
 		this.setTitle(title);
 		this.setId(id);
-		this.setCurrentState(pS);
+		this.setCurrentState(state);
 	}
 	
 	private void setId(int id) throws DomainException {
@@ -38,33 +37,29 @@ public abstract class Product {
 		return title;
 	}
 
-	protected void setCurrentState(ProductState state){
+	protected void setCurrentState(ProductStateEnum state){
 		this.currentState = state;
 	}
 	
-	public ProductState getCurrentState(){
+	public ProductStateEnum getCurrentState(){
 		return this.currentState;
 	}
 
-/*	public void returnToShop() throws DomainException{
-		currentState.returnToShop(this);
+	public void returnToShop(boolean damaged) throws DomainException{
+		getCurrentState().getState().returnToShop(this,damaged);
 	}
 	
 	public void rent() throws DomainException{
-		currentState.rent(this);
+		getCurrentState().getState().rent(this);
 	}
 	
 	public void delete() throws DomainException{
-		currentState.delete(this);
+		getCurrentState().getState().delete(this);
 	}
 	
-	public void damage() throws DomainException{
-		currentState.damage(this);
+	public void repair() throws DomainException{
+		getCurrentState().getState().repair(this);
 	}
-	
-	public void remove() throws DomainException{
-		currentState.delete(this);
-	}*/
 
 	public abstract int getPrice(int days);
 }

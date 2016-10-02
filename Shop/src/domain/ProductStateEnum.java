@@ -7,20 +7,20 @@ public enum ProductStateEnum {
 	DAMAGED("damaged",new Damaged()),
 	DELETED("deleted",new Deleted());
 	
-	private final String name;
-	private final ProductState state;
+	private final String NAME;
+	private final ProductState STATE;
 	
 	ProductStateEnum(String name,ProductState state){
-		this.name=name;
-		this.state = state;
+		this.NAME=name;
+		this.STATE = state;
 	}
 	
 	public String getName(){
-		return name;
+		return NAME;
 	}
 	
 	public ProductState getState(){
-		return state;
+		return STATE;
 	}
 	
 	

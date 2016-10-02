@@ -21,12 +21,6 @@ public class Deleted implements ProductState {
 	}
 
 	@Override
-	public void damage(Product p) throws DomainException {
-		throw new DomainException("The item can't be damaged when deleted.");
-
-	}
-
-	@Override
 	public void repair(Product p) throws DomainException {
 		throw new DomainException("The item can't be repaired when deleted.");
 		

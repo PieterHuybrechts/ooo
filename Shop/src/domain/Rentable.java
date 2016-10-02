@@ -4,7 +4,7 @@ public class Rentable implements ProductState {
 
 	@Override
 	public void rent(Product p) {
-		p.setCurrentState(ProductStateEnum.RENTED.getState());
+		p.setCurrentState(ProductStateEnum.RENTED);
 	}
 
 	@Override
@@ -15,13 +15,7 @@ public class Rentable implements ProductState {
 
 	@Override
 	public void delete(Product p) {
-		p.setCurrentState(ProductStateEnum.DELETED.getState());
-
-	}
-
-	@Override
-	public void damage(Product p) throws DomainException {
-		throw new DomainException("The item can't be deleted while it is in the shop.");
+		p.setCurrentState(ProductStateEnum.DELETED);
 
 	}
 

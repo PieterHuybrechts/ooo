@@ -39,8 +39,8 @@ public class TxtDb implements Database {
 		output += p.getTitle();
 		output += this.delimiter;
 		output += p.getId();
-		/*output += this.delimiter;
-		output += p.getState().toString();*/
+		output += this.delimiter;
+		output += p.getCurrentState().getName();
 		
 		try {
 			FileWriter writer = new FileWriter(file);
