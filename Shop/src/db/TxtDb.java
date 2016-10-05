@@ -21,7 +21,7 @@ public class TxtDb implements Database{
 	private String delimiter;
 	
 	public TxtDb() throws DbException {
-		setFile(new File("recource\\db.txt"));
+		setFile(new File("resources\\db.txt"));
 		delimiter = ";";
 	}
 	
@@ -35,8 +35,6 @@ public class TxtDb implements Database{
 				throw new DbException(MagicStrings.DBCREATIONERROR.getError());
 			}
 		}
-		
-		System.out.println(file.getAbsolutePath());
 	}
 	
 	private File getFile(){
@@ -153,8 +151,7 @@ public class TxtDb implements Database{
 		}
 	}
 
-	@Override
-	public void modifyProduct(Product p) throws DbException {
+	public void updateProduct(Product p) throws DbException {
 		int id = p.getId();
 		this.deleteProduct(id);
 		this.addProduct(p);

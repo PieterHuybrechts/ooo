@@ -30,25 +30,25 @@ public class Shop {
 	public void rentProduct(int id) throws DomainException, DbException{
 		Product p = getProduct(id);
 		p.rent();
-		db.modifyProduct(p);
+		db.updateProduct(p);
 	}
 	
 	public void returnProduct(int id,boolean damaged) throws DomainException, DbException{
 		Product p = getProduct(id);
 		p.returnToShop(damaged);
-		db.modifyProduct(p);
+		db.updateProduct(p);
 	}
 	
 	public void deleteProduct(int id) throws DomainException, DbException{
 		Product p = getProduct(id);
 		p.delete();
-		db.modifyProduct(p);
+		db.updateProduct(p);
 	}
 	
 	public void repairProduct(int id) throws DbException, DomainException{
 		Product p = getProduct(id);
 		p.repair();
-		db.modifyProduct(p);
+		db.updateProduct(p);
 	}
 
 }

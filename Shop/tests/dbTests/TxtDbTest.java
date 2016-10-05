@@ -102,10 +102,10 @@ public class TxtDbTest {
 	}
 
 	@Test
-	public void testModifyProductSucces() throws DomainException, DbException{
+	public void testUpdateProductSucces() throws DomainException, DbException{
 		Product p = products.get(0);
 		p.returnToShop(false);
-		db.modifyProduct(p);
+		db.updateProduct(p);
 		
 		Product product = db.getProduct(p.getId());
 		

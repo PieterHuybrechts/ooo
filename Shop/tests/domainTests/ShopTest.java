@@ -26,7 +26,7 @@ public class ShopTest {
 	@Before
 	public void setUp() throws Exception{
 		this.shop = new Shop();
-		this.products = new HashMap<>();
+		this.products = new HashMap<Integer, Product>();
 		products.put(0, new Game(321698,"testGame",ProductStateEnum.RENTABLE));
 		products.put(1, new Movie(12357,"testMovie",ProductStateEnum.DAMAGED));
 		products.put(2, new Game(987234,"testGame2",ProductStateEnum.DELETED));

@@ -10,7 +10,6 @@ import java.util.Map;
 import org.junit.*;
 
 import app.MagicStrings;
-import db.Database;
 import db.DbException;
 import db.RelationalDb;
 import domain.DomainException;
@@ -21,7 +20,7 @@ import domain.ProductStateEnum;
 
 public class RelationalDbTest {
 	
-	Database db;
+	RelationalDb db;
 	Map<Integer,Product> products;
 	
 	@Before
@@ -103,10 +102,10 @@ public class RelationalDbTest {
 	}
 
 	@Test
-	public void testModifyProductSucces() throws DomainException, DbException{
+	public void testUpdateProductSucces() throws DomainException, DbException{
 		Product p = products.get(0);
 		p.returnToShop(false);
-		db.modifyProduct(p);
+		db.updateProduct(p);
 		
 		Product product = db.getProduct(p.getId());
 		
