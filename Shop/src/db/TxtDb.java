@@ -14,7 +14,7 @@ import java.util.Scanner;
 import domain.Product;
 import domain.ProductStateEnum;
 
-public class TxtDb implements Database {
+public class TxtDb implements Database{
 
 	private File file;
 	private String delimiter;
@@ -42,7 +42,6 @@ public class TxtDb implements Database {
 		return this.file;
 	}
 	
-	@Override
 	public void addProduct(Product p) throws DbException{
 		Product pr=null;
 		
@@ -76,7 +75,6 @@ public class TxtDb implements Database {
 		}
 	}
 
-	@Override
 	public Product getProduct(int id) throws DbException {
 		BufferedReader in;
 		String line;

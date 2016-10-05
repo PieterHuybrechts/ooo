@@ -33,35 +33,18 @@ public class Shop {
 	}
 	
 	public void rentProduct(int productId) throws DomainException{
-		try{
-			getProduct(productId).rent();
-		}catch(Exception e){
-			throw e;
-		}
+		getProduct(productId).rent();
 	}
 	
 	public void returnProduct(int productId,boolean damaged) throws DomainException{
-		try{
-			getProduct(productId).returnToShop(damaged);
-		}catch(Exception e){
-			throw e;
-		}
+		getProduct(productId).returnToShop(damaged);
 	}
 	
 	public void deleteProduct(int productId) throws DomainException{
-		try{
 			getProduct(productId).delete();
-		}catch(Exception e){
-			throw e;
-		}
 	}
 	
 	public void repairProduct(int productId) throws DomainException{
-		try{
 			getProduct(productId).repair();
-		}catch(Exception e){
-			throw e;
-		}
-
 	}
 }
