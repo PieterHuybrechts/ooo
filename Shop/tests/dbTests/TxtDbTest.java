@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.junit.*;
 
+import app.MagicStrings;
+import db.Database;
 import db.DbException;
 import db.TxtDb;
 import domain.DomainException;
@@ -18,7 +20,7 @@ import domain.ProductStateEnum;
 
 public class TxtDbTest {
 	
-	TxtDb db;
+	Database db;
 	Map<Integer,Product> products;
 	
 	@Before
@@ -36,7 +38,7 @@ public class TxtDbTest {
 	}
 	
 	@After
-	public void cleanUp() throws IOException{
+	public void cleanUp() throws IOException, DbException{
 		for(int i : products.keySet()){
 			db.deleteProduct(products.get(i).getId());
 		}
@@ -50,25 +52,65 @@ public class TxtDbTest {
 		assertEquals(products.get(0),actual);
 	}
 	
-	@Test (expected = DbException.class)
+	@Test
 	public void testGetProductFail() throws DbException{
-		db.getProduct(3246584);
+		int id = 3246584;
+		try{
+			db.getProduct(id);
+		}catch(DbException e){
+			if(e.getMessage().replace(""+id, "").equals(MagicStrings.PRODUCTNOTFOUNDINDB.getError())){
+				return;
+			}
+		}
 	}
 	
-	@Test (expected = DbException.class)
+	@Test
 	public void testDeleteProductSucces() throws DbException{
-		db.deleteProduct(products.get(0).getId());
-		db.getProduct(products.get(0).getId());
+		int key = 0;
+		int id = products.get(key).getId();
+		products.remove(key);
+		db.deleteProduct(id);
+		
+		try{
+			db.getProduct(id);
+		}catch (Exception e) {
+			if(e.getMessage().replaceAll(""+id, "").equals(MagicStrings.PRODUCTNOTFOUNDINDB.getError())){
+				return;
+			}
+		}
 	}
 	
 	@Test
 	public void testAddProductSucces() throws DomainException, DbException{
-		db.addProduct(new Game(2, "addProductTest", ProductStateEnum.RENTABLE));
-		db.deleteProduct(2);
+		Product p = new Game(2, "addProductTest", ProductStateEnum.RENTABLE);
+		products.put(3, p);
+		
+		db.addProduct(p);
 	}
 	
-	@Test (expected=DbException.class)
+	@Test
 	public void testAddProductWithExistingId() throws DbException{
-		db.addProduct(products.get(0));
+		Product p = products.get(0);
+		
+		try{
+			db.addProduct(p);
+		}catch (DbException e) {
+			if(e.getMessage().equals(MagicStrings.EXISTINGIDINDB.getError()+p.getId())){
+				return;
+			}
+		}
+	}
+
+	@Test
+	public void testModifyProductSucces() throws DomainException, DbException{
+		Product p = products.get(0);
+		p.returnToShop(false);
+		db.modifyProduct(p);
+		
+		Product product = db.getProduct(p.getId());
+		
+		if(p.getId()==product.getId() && p.getTitle().equals(product.getTitle()) && p.getCurrentState()==product.getCurrentState()){
+			return;
+		}
 	}
 }

@@ -1,50 +1,54 @@
 package domain;
 
-import java.util.HashMap;
-import java.util.Map;
+import db.Database;
+import db.DbException;
+import db.TxtDb;
 
 public class Shop {
 	
-	private Map<Integer,Product> products;	
+	Database db;
 	
-	public Shop(){
-		this.products = new HashMap<Integer,Product>();
+	
+	public Shop() throws DbException{
+		db=new TxtDb();
 	}
 	
-	public void addProduct(Product p) throws DomainException{
-		Integer id = new Integer(p.getId());
-		
-		if(this.products.containsKey(id)){
-			throw new DomainException("Product id \""+id+"\" already exists.");
-		}
-		
-		products.put(id, p);	
+	public void addProduct(Product p) throws DbException{
+		db.addProduct(p);
 	}
 	
-	public Product getProduct(int id) throws DomainException{
-		Product p = null;
-		p = products.get(new Integer(id));
-		
-		if(p == null){
-			throw new DomainException("Product with id \""+ id + "\" not found");
-		}
-		
-		return p;
+	public Product getProduct(int id) throws DbException{
+		return db.getProduct(id);
 	}
 	
-	public void rentProduct(int productId) throws DomainException{
-		getProduct(productId).rent();
+	public void removeFromDb(int id) throws DbException{
+		db.deleteProduct(id);
 	}
 	
-	public void returnProduct(int productId,boolean damaged) throws DomainException{
-		getProduct(productId).returnToShop(damaged);
+	
+	
+	public void rentProduct(int id) throws DomainException, DbException{
+		Product p = getProduct(id);
+		p.rent();
+		db.modifyProduct(p);
 	}
 	
-	public void deleteProduct(int productId) throws DomainException{
-			getProduct(productId).delete();
+	public void returnProduct(int id,boolean damaged) throws DomainException, DbException{
+		Product p = getProduct(id);
+		p.returnToShop(damaged);
+		db.modifyProduct(p);
 	}
 	
-	public void repairProduct(int productId) throws DomainException{
-			getProduct(productId).repair();
+	public void deleteProduct(int id) throws DomainException, DbException{
+		Product p = getProduct(id);
+		p.delete();
+		db.modifyProduct(p);
 	}
+	
+	public void repairProduct(int id) throws DbException, DomainException{
+		Product p = getProduct(id);
+		p.repair();
+		db.modifyProduct(p);
+	}
+
 }

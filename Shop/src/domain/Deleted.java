@@ -1,25 +1,23 @@
 package domain;
 
+import app.MagicStrings;
+
 public class Deleted implements ProductState {
 
 	public void rent(Product p) throws DomainException {
-		throw new DomainException("The item can't be rented when deleted.");
-
+		throw new DomainException(MagicStrings.NOTRENTABLE.getError());
 	}
 
 	public void returnToShop(Product p,boolean damaged) throws DomainException {
-		throw new DomainException("The item can't be returned when deleted.");
-
+		throw new DomainException(MagicStrings.NOTRETURNABLE.getError());
 	}
 
 	public void delete(Product p) throws DomainException {
-		throw new DomainException("The item can't be deleted when deleted.");
-
+		throw new DomainException(MagicStrings.NOTDELETABLE.getError());
 	}
 
 	public void repair(Product p) throws DomainException {
-		throw new DomainException("The item can't be repaired when deleted.");
-		
+		throw new DomainException(MagicStrings.NOTREPAIRABLE.getError());	
 	}
 
 }

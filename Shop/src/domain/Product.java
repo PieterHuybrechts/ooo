@@ -1,5 +1,7 @@
 package domain;
 
+import app.MagicStrings;
+
 public abstract class Product {
 	private int id;
 	private String title;
@@ -17,7 +19,7 @@ public abstract class Product {
 	
 	private void setId(int id) throws DomainException {
 		if (id < 0) {
-			throw new DomainException("geef een getal groter dan 0");
+			throw new DomainException(MagicStrings.INVALLIDID.getError());
 		}
 		this.id = id;
 	}
@@ -28,7 +30,7 @@ public abstract class Product {
 	
 	private void setTitle(String title) throws DomainException {
 		if (title.isEmpty()) {
-			throw new DomainException("Typ een naam");
+			throw new DomainException(MagicStrings.INVALLIDNAME.getError());
 		}
 		this.title = title;
 	}

@@ -1,10 +1,11 @@
 package domain;
 
+import app.MagicStrings;
+
 public class Rented implements ProductState {
 
 	public void rent(Product p) throws DomainException {
-		throw new DomainException("The item can't be rented while it is rented.");
-
+		throw new DomainException(MagicStrings.NOTRENTABLE.getError());
 	}
 
 	public void returnToShop(Product p,boolean damaged) {
@@ -16,12 +17,11 @@ public class Rented implements ProductState {
 	}
 
 	public void delete(Product p) throws DomainException {
-		throw new DomainException("The item can't be deleted while it is rented.");
-
+		throw new DomainException(MagicStrings.NOTDELETABLE.getError());
 	}
 
 	public void repair(Product p) throws DomainException {
-		throw new DomainException("The item can't be repaired while it is rented.");
+		throw new DomainException(MagicStrings.NOTREPAIRABLE.getError());	
 	}
 
 }

@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.JOptionPane;
 
+import db.DbException;
 import domain.DomainException;
 import domain.Game;
 import domain.Movie;
@@ -63,6 +64,8 @@ public class Ui {
 			this.shop.addProduct(p);
 		}catch(NumberFormatException e){
 			JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
+		} catch (DbException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),"",JOptionPane.WARNING_MESSAGE);
 		}
 		
 		
@@ -76,8 +79,8 @@ public class Ui {
 			p=shop.getProduct(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-		} catch (DomainException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+		} catch (DbException e) {
+			JOptionPane.showMessageDialog(null,e.getMessage(), "",JOptionPane.WARNING_MESSAGE);
 		}
 		
 		if(p!=null)
@@ -94,8 +97,8 @@ public class Ui {
 			p=shop.getProduct(Integer.parseInt(id));
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-		} catch (DomainException e) {
-			JOptionPane.showMessageDialog(null, e.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+		} catch (DbException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 		}
 		
 		
@@ -115,6 +118,8 @@ public class Ui {
 			JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
 		} catch (DomainException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+		} catch (DbException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -127,6 +132,8 @@ public class Ui {
 			JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
 		} catch (DomainException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+		} catch (DbException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -145,6 +152,8 @@ public class Ui {
 			JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
 		} catch (DomainException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+		} catch (DbException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -157,6 +166,8 @@ public class Ui {
 			JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
 		} catch (DomainException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+		} catch (DbException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 		}
 	}
 }

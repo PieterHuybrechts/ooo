@@ -11,6 +11,7 @@ import java.lang.reflect.Constructor;
 import java.nio.file.Files;
 import java.util.Scanner;
 
+import app.MagicStrings;
 import domain.Product;
 import domain.ProductStateEnum;
 
@@ -20,7 +21,7 @@ public class TxtDb implements Database{
 	private String delimiter;
 	
 	public TxtDb() throws DbException {
-		setFile(new File("db.txt"));
+		setFile(new File("recource\\db.txt"));
 		delimiter = ";";
 	}
 	
@@ -31,7 +32,7 @@ public class TxtDb implements Database{
 			try {
 				this.getFile().createNewFile();
 			} catch (IOException e) {
-				throw new DbException(e);
+				throw new DbException(MagicStrings.DBCREATIONERROR.getError());
 			}
 		}
 		
@@ -52,7 +53,7 @@ public class TxtDb implements Database{
 		}
 		
 		if(pr!=null){
-			throw new DbException("There is already an item with id:\""+p.getId()+"\"in the database");
+			throw new DbException(MagicStrings.EXISTINGIDINDB.getError()+p.getId());
 		}
 		
 		String output = "";
@@ -96,10 +97,11 @@ public class TxtDb implements Database{
 					Class<?> clazz = Class.forName(classNameStr);
 					Constructor<?> ctor = clazz.getConstructor(int.class,String.class,ProductStateEnum.class);
 					product = (Product)ctor.newInstance(Integer.parseInt(idStr),nameStr,ProductStateEnum.valueOf(currentStateStr));					
-				
+					scanner.close();
+					break;
 				}
 				scanner.close();
-				break;
+				
 			}
 			in.close();
 		}
@@ -108,17 +110,18 @@ public class TxtDb implements Database{
 		}
 		
 		if(product == null){
-			throw new DbException("Product could not be found in the database.");
+			throw new DbException(MagicStrings.PRODUCTNOTFOUNDINDB.getError()+id);
 		}
 		
 		return product;
 	}
 	
-	public void deleteProduct(int id){
+	public void deleteProduct(int id) throws DbException{
 		File tempFile = new File("temp.txt");
 		BufferedReader in;
 		BufferedWriter out;
 		String line;
+		boolean deleted = false;
 		
 		try{
 			in = new BufferedReader(new FileReader(getFile()));
@@ -130,6 +133,9 @@ public class TxtDb implements Database{
 				
 				if(id!=Integer.parseInt(scanner.next())){
 					out.write(line.trim()+"\n");
+					scanner.close();
+				}else{
+					deleted = true;
 				}
 				scanner.close();
 			}
@@ -141,10 +147,16 @@ public class TxtDb implements Database{
 		}catch (Exception e) {
 			
 		}
+		
+		if(!deleted){
+			throw new DbException(MagicStrings.PRODUCTNOTFOUNDINDB.getError()+id);
+		}
 	}
 
-	/*public void drop() throws IOException {
-		Files.delete(file.toPath());
-	}*/
-
+	@Override
+	public void modifyProduct(Product p) throws DbException {
+		int id = p.getId();
+		this.deleteProduct(id);
+		this.addProduct(p);
+	}
 }
