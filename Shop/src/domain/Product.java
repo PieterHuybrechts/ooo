@@ -60,6 +60,22 @@ public abstract class Product {
 	public void repair() throws DomainException{
 		getCurrentState().getState().repair(this);
 	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof Product){
+			Product p = (Product) o;
+			if(this.getId()!=p.getId()){
+				return false;
+			}else if(!this.getTitle().equals(p.getTitle())){
+				return false;
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
 
 	public abstract int getPrice(int days);
 }

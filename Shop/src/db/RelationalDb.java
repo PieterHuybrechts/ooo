@@ -11,9 +11,21 @@ public class RelationalDb implements Database {
 	}
 
 	@Override
-	public void getProduct(int id) {
-		// TODO Auto-generated method stub
-
+	public Product getProduct(int id){
+		return null;
+		
 	}
+
+	@Override
+	public void deleteProduct(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/*@Override
+	public boolean containsId(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}*/
 
 }
