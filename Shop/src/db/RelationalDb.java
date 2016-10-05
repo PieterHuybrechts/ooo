@@ -1,6 +1,7 @@
 package db;
 
 import domain.Product;
+import db.DbException;
 
 public class RelationalDb implements Database {
 
@@ -8,17 +9,19 @@ public class RelationalDb implements Database {
 		
 	}
 	
-	public void addProduct(Product p) {
-		// TODO Auto-generated method stub
+	public void addProduct(Product p) throws DbException {
+		throw new DbException("not implemented");
 
 	}
 
-	public Product getProduct(int id){
-		return null;
+	public Product getProduct(int id) throws DbException{
+		throw new DbException("not implemented");
+		
 		
 	}
 
-	public void deleteProduct(int id) {
+	public void deleteProduct(int id) throws DbException {
+		throw new DbException("not implemented");
 		// TODO Auto-generated method stub
 		
 	}

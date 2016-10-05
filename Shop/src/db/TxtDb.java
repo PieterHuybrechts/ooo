@@ -63,7 +63,7 @@ public class TxtDb implements Database{
 		output += this.delimiter;
 		output += p.getClass().getName();
 		output += this.delimiter;
-		output += p.getCurrentState();
+		output += p.getCurrentState().toString();
 		output += "\n";
 		
 		try {

@@ -23,6 +23,10 @@ public enum ProductStateEnum {
 		return STATE;
 	}
 	
+	/*public String toString(){
+		return getName();
+	}*/
+	
 	
 	
 }

@@ -6,5 +6,5 @@ public interface Database {
 
 	public void addProduct(Product p) throws DbException;
 	public Product getProduct(int id) throws DbException;
-	public void deleteProduct(int id);
+	public void deleteProduct(int id) throws DbException;
 }
