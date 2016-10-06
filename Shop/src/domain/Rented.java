@@ -1,13 +1,7 @@
 package domain;
 
-import app.MagicStrings;
-
-public class Rented implements ProductState {
-
-	public void rent(Product p) throws DomainException {
-		throw new DomainException(MagicStrings.NOTRENTABLE.getError());
-	}
-
+public class Rented extends ProductState {
+	
 	public void returnToShop(Product p,boolean damaged) {
 		if(damaged){
 			p.setCurrentState(ProductStateEnum.DAMAGED);
@@ -15,13 +9,4 @@ public class Rented implements ProductState {
 			p.setCurrentState(ProductStateEnum.RENTABLE);
 		}
 	}
-
-	public void delete(Product p) throws DomainException {
-		throw new DomainException(MagicStrings.NOTDELETABLE.getError());
-	}
-
-	public void repair(Product p) throws DomainException {
-		throw new DomainException(MagicStrings.NOTREPAIRABLE.getError());	
-	}
-
 }

@@ -11,7 +11,7 @@ import org.junit.*;
 
 import app.MagicStrings;
 import db.DbException;
-import db.RelationalDb;
+import db.SqlDb;
 import domain.DomainException;
 import domain.Game;
 import domain.Movie;
@@ -20,12 +20,12 @@ import domain.ProductStateEnum;
 
 public class RelationalDbTest {
 	
-	RelationalDb db;
+	SqlDb db;
 	Map<Integer,Product> products;
 	
 	@Before
 	public void setUp() throws DbException, DomainException, SQLException{
-		db = new RelationalDb();
+		db = new SqlDb();
 		products = new HashMap<Integer,Product>();
 		
 		products.put(0,new Game(75311, "testGame" ,ProductStateEnum.RENTED));

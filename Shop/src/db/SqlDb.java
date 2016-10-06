@@ -13,7 +13,7 @@ import java.sql.Statement;
 import app.MagicStrings;
 import db.DbException;
 
-public class RelationalDb implements Database {
+public class SqlDb implements Database {
 
 	
 	private static String dbURL = "jdbc:derby:resources/shopDb;create=true";
@@ -21,7 +21,7 @@ public class RelationalDb implements Database {
 	private static Connection conn = null;
 	private static Statement stmt =null;
 	
-	public RelationalDb() throws DbException{
+	public SqlDb() throws DbException{
 		conn = this.createConnection();
 		createTable();
 	}

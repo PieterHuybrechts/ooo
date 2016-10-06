@@ -2,7 +2,7 @@ package domain;
 
 import db.Database;
 import db.DbException;
-import db.TxtDb;
+import db.SqlDb;
 
 public class Shop {
 	
@@ -10,7 +10,7 @@ public class Shop {
 	
 	
 	public Shop() throws DbException{
-		db=new TxtDb();
+		db=new SqlDb();
 	}
 	
 	public void addProduct(Product p) throws DbException{
