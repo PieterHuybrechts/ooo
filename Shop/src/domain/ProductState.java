@@ -1,7 +1,6 @@
 package domain;
 
 import app.MagicStrings;
-import db.DbException;
 
 public class ProductState implements IProductState{
 
