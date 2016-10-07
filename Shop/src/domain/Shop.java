@@ -6,7 +6,7 @@ import db.SqlDb;
 
 public class Shop {
 	
-	Database db;
+	private Database db;
 	
 	
 	public Shop() throws DbException{
