@@ -2,7 +2,7 @@ package domain;
 
 import app.MagicStrings;
 
-public class ProductState implements IProductState{
+public class ProductState{
 
 	public void rent(Product p) throws DomainException {
 		throw new DomainException(MagicStrings.NOTRENTABLE.getError());
