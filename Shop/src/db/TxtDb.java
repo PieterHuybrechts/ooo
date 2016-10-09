@@ -9,9 +9,11 @@ import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Scanner;
 
 import app.MagicStrings;
+import domain.Customer;
 import domain.Product;
 import domain.ProductStateEnum;
 
@@ -155,5 +157,35 @@ public class TxtDb implements Database{
 		int id = p.getId();
 		this.deleteProduct(id);
 		this.addProduct(p);
+	}
+
+	public void addCustomer(Customer c) throws DbException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Customer getCustomer(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void updateCustomer(Customer c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<Customer> getAllCustomers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Customer> getAllSubscribedCustomers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Product getLastAddedProduct() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

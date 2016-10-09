@@ -30,7 +30,7 @@ public abstract class Product {
 	
 	private void setTitle(String title) throws DomainException {
 		if (title.isEmpty()) {
-			throw new DomainException(MagicStrings.INVALLIDNAME.getError());
+			throw new DomainException(MagicStrings.INVALLIDNAMEENTERED.getError());
 		}
 		this.title = title;
 	}

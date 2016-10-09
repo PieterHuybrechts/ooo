@@ -4,7 +4,7 @@ import db.Database;
 import db.DbException;
 import db.SqlDb;
 
-public class Shop {
+public class Shop implements Subject{
 	
 	private Database db;
 	
@@ -49,6 +49,21 @@ public class Shop {
 		Product p = getProduct(id);
 		p.repair();
 		db.updateProduct(p);
+	}
+
+	public void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteObserver(Observer o) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
