@@ -13,8 +13,7 @@ public interface Database {
 	public Customer getCustomer(int id);
 	public void deleteProduct(int id) throws DbException;
 	public void updateProduct(Product p) throws DbException;
-	public void updateCustomer(Customer c);
-	public List<Customer> getAllCustomers();
-	public List<Customer> getAllSubscribedCustomers();
-	public Product getLastAddedProduct();
+	public List<Customer> getAllCustomers() throws DbException;
+	public List<Customer> getAllSubscribedCustomers() throws DbException;
+	public Product getLastAddedProduct() throws DbException;
 }

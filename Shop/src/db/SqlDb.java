@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import app.MagicStrings;
@@ -40,14 +41,19 @@ public class SqlDb implements Database {
 	private void createTable(){
 		try{
 			stmt = conn.createStatement();
+			//stmt.execute("CREATE TABLE "+productsTableName+" (id INTEGER PRIMARY KEY, title VARCHAR(20), class VARCHAR(20), state VARCHAR(20), DateCreated DATETIME NOT NULL DEFAULT(GETDATE()))");
 			stmt.execute("CREATE TABLE "+productsTableName+" (id INTEGER PRIMARY KEY, title VARCHAR(20), class VARCHAR(20), state VARCHAR(20))");
-			stmt.execute("CREATE TABLE "+customersTableName+" (id INTEGER PRIMARY KEY, firstName VARCHAR(20), lastName VARCHAR(20), address VARCHAR(20), zipCode VARCHAR(4), city VARCHAR(20), emailAddress VARCHAR(50), subscribed BOOLEAN)");
 			stmt.close();
+			/*stmt = conn.createStatement();
+			stmt.execute("CREATE TABLE "+customersTableName+" (id INTEGER PRIMARY KEY, firstName VARCHAR(20), lastName VARCHAR(20), address VARCHAR(20), zipCode VARCHAR(4), city VARCHAR(20), emailAddress VARCHAR(50), subscribed BOOLEAN)");
+			stmt.close();*/
 		}catch(SQLException e){
 			try {
 				stmt.close();
 			} catch (SQLException e1) {}
 		}
+		
+		
 		
 	}	
 	
@@ -60,6 +66,8 @@ public class SqlDb implements Database {
 				try {
 					stmt.close();
 				} catch (SQLException e1) {}
+				System.out.println(p.getId());
+				System.out.println(e.getMessage());
 				throw new DbException(MagicStrings.EXISTINGIDINDB.getError()+p.getId());
 			}
 			
@@ -139,7 +147,7 @@ public class SqlDb implements Database {
 		Customer c = null;
 		try{
 			stmt = conn.createStatement();
-			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+" WHERE id="+id);
+			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName);
 			set.next();
 			int i = Integer.parseInt(set.getString("id"));
 			String firstName = set.getString("firstName");
@@ -163,24 +171,78 @@ public class SqlDb implements Database {
 		return c;
 	}
 
-	public void updateCustomer(Customer c) {
-		// TODO Auto-generated method stub
+	public List<Customer> getAllCustomers() throws DbException {
+		List<Customer> customers = new ArrayList<Customer>();
 		
+		try{
+			stmt = conn.createStatement();
+			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+ "WHERE subscibed=true");
+			while(set.next()){
+				int i = Integer.parseInt(set.getString("id"));
+				String firstName = set.getString("firstName");
+				String lastName = set.getString("lastName");
+				String address = set.getString("address");
+				String zipCode = set.getString("zipCode");
+				String city = set.getString("city");
+				String emailAddress = set.getString("emailAddress");
+				boolean subscribed = set.getString("subscribed").toLowerCase().equals("true");
+				
+				customers.add(new Customer(i, firstName, lastName, address, zipCode, city, emailAddress, subscribed));
+			}
+			stmt.close();
+		}catch (Exception e){
+			throw new DbException("Couldn't get all customers.");
+		}
+		
+		return customers;
 	}
 
-	public List<Customer> getAllCustomers() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Customer> getAllSubscribedCustomers() throws DbException {
+List<Customer> customers = new ArrayList<Customer>();
+		
+		try{
+			stmt = conn.createStatement();
+			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+ "WHERE subscibed=true");
+			while(set.next()){
+				int i = Integer.parseInt(set.getString("id"));
+				String firstName = set.getString("firstName");
+				String lastName = set.getString("lastName");
+				String address = set.getString("address");
+				String zipCode = set.getString("zipCode");
+				String city = set.getString("city");
+				String emailAddress = set.getString("emailAddress");
+				boolean subscribed = set.getString("subscribed").toLowerCase().equals("true");
+				
+				customers.add(new Customer(i, firstName, lastName, address, zipCode, city, emailAddress, subscribed));
+			}
+			stmt.close();
+		}catch (Exception e){
+			throw new DbException("Couldn't get all customers.");
+		}
+		
+		return customers;
 	}
 
-	public List<Customer> getAllSubscribedCustomers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Product getLastAddedProduct() {
-		// TODO Auto-generated method stub
-		return null;
+	public Product getLastAddedProduct() throws DbException {
+		Product p = null;
+		try{
+			stmt = conn.createStatement();
+			ResultSet set = stmt.executeQuery("SELECT * FROM " + productsTableName + " WHERE DateCreated IN (SELECT max(DateCreated) FROM "+productsTableName+")");
+			set.next();
+			int i = Integer.parseInt(set.getString("id"));
+			String name = set.getString("title");
+			String classStr = set.getString("class");
+			String stateStr = set.getString("state");
+			stmt.close();
+			
+			Class<?> clazz = Class.forName(classStr);
+			Constructor<?> ctor = clazz.getConstructor(int.class,String.class,ProductStateEnum.class);
+			p = (Product)ctor.newInstance((i),name,ProductStateEnum.valueOf(stateStr));	
+			stmt.close();
+		}catch(Exception e){
+			throw new DbException("Couldn't find the last added product");
+		}
+		return p;
 	}
 	
 	

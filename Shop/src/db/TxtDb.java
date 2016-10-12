@@ -169,11 +169,6 @@ public class TxtDb implements Database{
 		return null;
 	}
 
-	public void updateCustomer(Customer c) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public List<Customer> getAllCustomers() {
 		// TODO Auto-generated method stub
 		return null;
