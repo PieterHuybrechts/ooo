@@ -27,7 +27,7 @@ public class SqlDb implements Database {
 	
 	public SqlDb() throws DbException{
 		conn = this.createConnection();
-		createTable();
+		createTables();
 	}
 	
 	private Connection createConnection() throws DbException{
@@ -38,15 +38,21 @@ public class SqlDb implements Database {
 		}
 	}
 	
-	private void createTable(){
+	private void createTables(){
 		try{
 			stmt = conn.createStatement();
-			//stmt.execute("CREATE TABLE "+productsTableName+" (id INTEGER PRIMARY KEY, title VARCHAR(20), class VARCHAR(20), state VARCHAR(20), DateCreated DATETIME NOT NULL DEFAULT(GETDATE()))");
-			stmt.execute("CREATE TABLE "+productsTableName+" (id INTEGER PRIMARY KEY, title VARCHAR(20), class VARCHAR(20), state VARCHAR(20))");
+			stmt.execute("CREATE TABLE "+productsTableName+" (id INTEGER PRIMARY KEY, title VARCHAR(20) NOT NULL, class VARCHAR(20) NOT NULL, state VARCHAR(20) NOT NULL, time_stamp TIMESTAMP NOT NULL)");
+			stmt.close();			
+		}catch(SQLException e){
+			try {
+				stmt.close();
+			} catch (SQLException e1) {}
+		}
+		
+		try{
+			stmt = conn.createStatement();
+			stmt.execute("CREATE TABLE "+customersTableName+" (id INTEGER PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), address VARCHAR(20), zip_code VARCHAR(4), city VARCHAR(20), email_address VARCHAR(50), subscribed BOOLEAN)");
 			stmt.close();
-			/*stmt = conn.createStatement();
-			stmt.execute("CREATE TABLE "+customersTableName+" (id INTEGER PRIMARY KEY, firstName VARCHAR(20), lastName VARCHAR(20), address VARCHAR(20), zipCode VARCHAR(4), city VARCHAR(20), emailAddress VARCHAR(50), subscribed BOOLEAN)");
-			stmt.close();*/
 		}catch(SQLException e){
 			try {
 				stmt.close();
@@ -60,14 +66,12 @@ public class SqlDb implements Database {
 	public void addProduct(Product p) throws DbException{
 			try{
 				stmt = conn.createStatement();
-				stmt.execute("INSERT INTO "+ productsTableName + " VALUES (" + p.getId() + ",'" + p.getTitle() + "','" + p.getClass().getName() + "','" + p.getCurrentState() + "')");
+				stmt.execute("INSERT INTO "+ productsTableName + " VALUES (" + p.getId() + ",'" + p.getTitle() + "','" + p.getClass().getName() + "','" + p.getCurrentState() + "', CURRENT_TIMESTAMP)");
 				stmt.close();
 			}catch(SQLException e){
 				try {
 					stmt.close();
 				} catch (SQLException e1) {}
-				System.out.println(p.getId());
-				System.out.println(e.getMessage());
 				throw new DbException(MagicStrings.EXISTINGIDINDB.getError()+p.getId());
 			}
 			
@@ -198,19 +202,19 @@ public class SqlDb implements Database {
 	}
 
 	public List<Customer> getAllSubscribedCustomers() throws DbException {
-List<Customer> customers = new ArrayList<Customer>();
+		List<Customer> customers = new ArrayList<Customer>();
 		
 		try{
 			stmt = conn.createStatement();
 			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+ "WHERE subscibed=true");
 			while(set.next()){
 				int i = Integer.parseInt(set.getString("id"));
-				String firstName = set.getString("firstName");
-				String lastName = set.getString("lastName");
+				String firstName = set.getString("first_name");
+				String lastName = set.getString("last_name");
 				String address = set.getString("address");
-				String zipCode = set.getString("zipCode");
+				String zipCode = set.getString("zip_code");
 				String city = set.getString("city");
-				String emailAddress = set.getString("emailAddress");
+				String emailAddress = set.getString("email_address");
 				boolean subscribed = set.getString("subscribed").toLowerCase().equals("true");
 				
 				customers.add(new Customer(i, firstName, lastName, address, zipCode, city, emailAddress, subscribed));
@@ -227,7 +231,7 @@ List<Customer> customers = new ArrayList<Customer>();
 		Product p = null;
 		try{
 			stmt = conn.createStatement();
-			ResultSet set = stmt.executeQuery("SELECT * FROM " + productsTableName + " WHERE DateCreated IN (SELECT max(DateCreated) FROM "+productsTableName+")");
+			ResultSet set = stmt.executeQuery("SELECT * FROM " + productsTableName + " WHERE DateCreated IN (SELECT max(date_created) FROM "+productsTableName+")");
 			set.next();
 			int i = Integer.parseInt(set.getString("id"));
 			String name = set.getString("title");
