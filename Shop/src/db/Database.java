@@ -8,12 +8,17 @@ import domain.Product;
 public interface Database {
 
 	public void addProduct(Product p) throws DbException;
-	public void addCustomer(Customer c) throws DbException;
 	public Product getProduct(int id) throws DbException;
-	public Customer getCustomer(int id);
 	public void deleteProduct(int id) throws DbException;
 	public void updateProduct(Product p) throws DbException;
-	public List<Customer> getAllCustomers() throws DbException;
+	
+	public void addCustomer(Customer c) throws DbException;
+	public Customer getCustomer(int id);
+	public void deleteCustomer(int id) throws DbException;
+	
 	public List<Customer> getAllSubscribedCustomers() throws DbException;
 	public Product getLastAddedProduct() throws DbException;
+	public List<Customer> getAllCustomers() throws DbException;
 }
+
+

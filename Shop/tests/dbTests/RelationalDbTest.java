@@ -12,6 +12,7 @@ import org.junit.*;
 import app.MagicStrings;
 import db.DbException;
 import db.SqlDb;
+import domain.Customer;
 import domain.DomainException;
 import domain.Game;
 import domain.Movie;
@@ -22,18 +23,28 @@ public class RelationalDbTest {
 	
 	SqlDb db;
 	Map<Integer,Product> products;
+	Map<Integer,Customer> customers;
 	
 	@Before
 	public void setUp() throws DbException, DomainException, SQLException{
 		db = new SqlDb();
-		products = new HashMap<Integer,Product>();
 		
+		products = new HashMap<Integer,Product>();
 		products.put(0,new Game(75311, "testGame" ,ProductStateEnum.RENTED));
 		products.put(1,new Movie(41372, "testMovie" ,ProductStateEnum.DAMAGED));
 		products.put(2,new Game(78963, "testGame2" ,ProductStateEnum.RENTABLE));
 		
+		customers= new HashMap<Integer, Customer>();
+		customers.put(0, new Customer(741234, "Pieter", "Huybrechts", "Donkelstraat 16", "3350", "Linter", "huybrechtspieter@gmail.com", true));
+		customers.put(1, new Customer(123456, "testFirst", "testLast", "teststraat 123", "1234", "Testcity", "test.test@test.com", false));
+		customers.put(1, new Customer(756689, "testFirst2", "testLast2", "teststraat 1232", "1234", "Testcity2", "test2.test2@test.com", true));
+		
 		for(int i : products.keySet()){
 			db.addProduct(products.get(i));
+		}
+		
+		for(int i : customers.keySet()){
+			db.addCustomer(customers.get(i));
 		}
 	}
 	
@@ -42,9 +53,15 @@ public class RelationalDbTest {
 		for(int i : products.keySet()){
 			db.deleteProduct(products.get(i).getId());
 		}
+		
+		for(int i : customers.keySet()){
+			db.deleteCustomer(customers.get(i).getId());
+		}
+		
 		db = null;
 		products = null;
 	}
+	
 	
 	@Test
 	public void testGetProductSucces() throws DbException{
@@ -53,7 +70,7 @@ public class RelationalDbTest {
 	}
 	
 	@Test
-	public void testGetProductFail() throws DbException{
+	public void testGetProductFail(){
 		int id = 3246584;
 		try{
 			db.getProduct(id);
@@ -64,6 +81,27 @@ public class RelationalDbTest {
 		}
 	}
 	
+	@Test
+	public void testAddProductSucces() throws DomainException, DbException{
+		Product p = new Game(2, "addProductTest", ProductStateEnum.RENTABLE);
+		products.put(3, p);
+		
+		db.addProduct(p);
+	}
+	
+	@Test
+	public void testAddProductWithExistingId(){
+		Product p = products.get(0);
+		
+		try{
+			db.addProduct(p);
+		}catch (DbException e) {
+			if(e.getMessage().equals(MagicStrings.EXISTINGIDINDB.getError()+p.getId())){
+				return;
+			}
+		}
+	}
+
 	@Test
 	public void testDeleteProductSucces() throws DbException{
 		int key = 0;
@@ -81,26 +119,10 @@ public class RelationalDbTest {
 	}
 	
 	@Test
-	public void testAddProductSucces() throws DomainException, DbException{
-		Product p = new Game(2, "addProductTest", ProductStateEnum.RENTABLE);
-		products.put(3, p);
+	public void testDeleteProductWithUnExistingId(){
 		
-		db.addProduct(p);
 	}
 	
-	@Test
-	public void testAddProductWithExistingId() throws DbException{
-		Product p = products.get(0);
-		
-		try{
-			db.addProduct(p);
-		}catch (DbException e) {
-			if(e.getMessage().equals(MagicStrings.EXISTINGIDINDB.getError()+p.getId())){
-				return;
-			}
-		}
-	}
-
 	@Test
 	public void testUpdateProductSucces() throws DomainException, DbException{
 		Product p = products.get(0);
@@ -113,4 +135,54 @@ public class RelationalDbTest {
 			return;
 		}
 	}
+
+	
+	
+	@Test
+	public void testAddCustomerSucces(){
+		//TODO
+	}
+	
+	@Test
+	public void testAddCustomerWithExistingId(){
+		//TODO
+	}
+	
+	@Test
+	public void testGetCustomerSucces(){
+		//TODO
+	}
+	
+	@Test
+	public void testGetCustomerWithUnExistingId(){
+		//TODO
+	}
+	
+	@Test
+	public void testDeleteCustomerSucces(){
+		//TODO
+	}
+	
+	@Test
+	public void testDeleteCustomerWithUnexistingId(){
+		//TODO
+	}
+	
+	@Test
+	public void testGetAllCustomers(){
+		//TODO
+	}
+	
+	@Test
+	public void testGetAllSubscribedCustomers(){
+		//TODO
+	}
+	
+	@Test
+	public void testGetLastAddedProduct(){
+		//TODO
+	}
+	
+	
+	
 }

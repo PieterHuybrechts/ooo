@@ -132,6 +132,8 @@ public class SqlDb implements Database {
 		
 	}
 
+	
+	
 	public void addCustomer(Customer c) throws DbException {
 		try {
 			stmt = conn.createStatement();
@@ -175,6 +177,20 @@ public class SqlDb implements Database {
 		return c;
 	}
 
+	public void deleteCustomer(int id) throws DbException {
+		try {
+			stmt=conn.createStatement();
+			stmt.execute("DELETE FROM " +customersTableName+" WHERE id="+id);
+			stmt.close();
+		} catch (SQLException e) {
+			try{
+				stmt.close();
+			}catch(Exception e1){}
+			
+			throw new DbException("Couldn't delete the customer");
+		}
+	}
+	
 	public List<Customer> getAllCustomers() throws DbException {
 		List<Customer> customers = new ArrayList<Customer>();
 		
@@ -195,6 +211,10 @@ public class SqlDb implements Database {
 			}
 			stmt.close();
 		}catch (Exception e){
+			try {
+				stmt.close();
+			} catch (SQLException e1) {}
+			
 			throw new DbException("Couldn't get all customers.");
 		}
 		
@@ -221,6 +241,10 @@ public class SqlDb implements Database {
 			}
 			stmt.close();
 		}catch (Exception e){
+			try {
+				stmt.close();
+			} catch (SQLException e1) {}
+			
 			throw new DbException("Couldn't get all customers.");
 		}
 		
@@ -244,10 +268,18 @@ public class SqlDb implements Database {
 			p = (Product)ctor.newInstance((i),name,ProductStateEnum.valueOf(stateStr));	
 			stmt.close();
 		}catch(Exception e){
+			try {
+				stmt.close();
+			} catch (SQLException e1) {}
+		
 			throw new DbException("Couldn't find the last added product");
 		}
 		return p;
 	}
+
+
+
+
 	
 	
 	

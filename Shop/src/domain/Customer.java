@@ -38,7 +38,7 @@ public class Customer {
 	}
 	private void setVoornaam(String firstName) throws DomainException {
 		if(firstName == null || firstName.isEmpty()){
-			throw new DomainException(MagicStrings.INVALLIDID.getError());
+			throw new DomainException(MagicStrings.INVALLIDNAME.getError());
 		}
 		this.firstName = firstName;
 	}
@@ -46,8 +46,8 @@ public class Customer {
 		return lastName;
 	}
 	private void setAchternaam(String lastName) throws DomainException {
-		if(firstName == null || firstName.isEmpty()){
-			throw new DomainException(MagicStrings.INVALLIDID.getError());
+		if(lastName == null || lastName.isEmpty()){
+			throw new DomainException(MagicStrings.INVALLIDNAME.getError());
 		}
 		this.lastName = lastName;
 	}

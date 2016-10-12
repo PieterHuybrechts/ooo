@@ -183,4 +183,14 @@ public class TxtDb implements Database{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public void updateCustomer(Customer c) throws DbException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteCustomer(int id) throws DbException {
+		// TODO Auto-generated method stub
+		
+	}
 }
