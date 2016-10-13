@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.*;
@@ -96,7 +98,7 @@ public class RelationalDbTest {
 		try{
 			db.addProduct(p);
 		}catch (DbException e) {
-			if(e.getMessage().equals(MagicStrings.EXISTINGIDINDB.getError()+p.getId())){
+			if(e.getMessage().equals(MagicStrings.PRODUCTEXISTINGINDB.getError()+p.getId())){
 				return;
 			}
 		}
@@ -118,9 +120,16 @@ public class RelationalDbTest {
 		}
 	}
 	
-	@Test
+	@Test 
 	public void testDeleteProductWithUnExistingId(){
-		
+		int id = 321654987;
+		try{
+			this.db.deleteProduct(id);			
+		}catch(DbException e){
+			if(!e.getMessage().equals(MagicStrings.PRODUCTNOTDELETABLEFROMDB.getError().replaceAll(""+id, ""))){
+				fail();
+			}
+		}
 	}
 	
 	@Test
@@ -133,44 +142,86 @@ public class RelationalDbTest {
 		
 		if(p.getId()==product.getId() && p.getTitle().equals(product.getTitle()) && p.getCurrentState()==product.getCurrentState()){
 			return;
+		}else{
+			fail();
 		}
 	}
 
 	
 	
 	@Test
-	public void testAddCustomerSucces(){
-		//TODO
+	public void testAddCustomerSucces() throws DomainException, DbException{
+		Customer c = new Customer(1628, "testAddFirst", "testAddLast", "testAddStreet", "7456", "testAddCity", "testAddMail@test.com", false);
+		db.addCustomer(c);
+		this.customers.put(4, c);
 	}
 	
 	@Test
 	public void testAddCustomerWithExistingId(){
-		//TODO
+		Customer c = customers.get(0);
+		try{
+			db.addCustomer(c);
+		}catch(DbException e){
+			if(e.getMessage().replaceAll(""+c.getId(), "").equals(MagicStrings.CUSTOMEREXISTINGINDB.getError()));
+		}
 	}
 	
 	@Test
-	public void testGetCustomerSucces(){
-		//TODO
+	public void testGetCustomerSucces() throws DbException{
+		int i =0;
+		Customer c = db.getCustomer(customers.get(i).getId());		
+		assertEquals(customers.get(i), c);
 	}
 	
 	@Test
 	public void testGetCustomerWithUnExistingId(){
-		//TODO
+		int id = 15634;
+		try{
+			db.getCustomer(id);
+		}catch(DbException e){
+			assertEquals(MagicStrings.CUSTOMERNOTFOUNDINDB.getError(), e.getMessage().replaceAll(""+id, ""));
+		}
 	}
 	
 	@Test
-	public void testDeleteCustomerSucces(){
-		//TODO
+	public void testDeleteCustomerSucces() throws DbException{
+		int i = 0;
+		db.deleteCustomer(customers.get(i).getId());
+		customers.remove(i);
 	}
 	
 	@Test
 	public void testDeleteCustomerWithUnexistingId(){
-		//TODO
+		int id = 125678;
+		try{
+			db.deleteCustomer(id);
+		}catch(DbException e){
+			assertEquals(MagicStrings.PRODUCTNOTDELETABLEFROMDB.getError(), e.getMessage().replaceAll(""+id, ""));
+		}
 	}
 	
 	@Test
-	public void testGetAllCustomers(){
-		//TODO
+	public void testGetAllCustomers() throws DbException{
+		
+		fail();
+		
+		List<Customer> dbCustomers = db.getAllCustomers();
+		List<Customer> newList = new ArrayList<Customer>();
+		for(int i : customers.keySet()){
+			newList.add(customers.get(i));
+		}
+		
+		for(Customer c : dbCustomers){
+			if(!newList.contains(c)){
+				fail();
+			}
+			newList.remove(c);
+		}
+		if(!newList.isEmpty()){
+			fail();
+		}
+		
+		
 	}
 	
 	@Test

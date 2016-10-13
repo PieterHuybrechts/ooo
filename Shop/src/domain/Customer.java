@@ -96,5 +96,16 @@ public class Customer {
 		this.subscribed = subscribed;
 	}
 	
+	public boolean equals(Object o){
+		if(o instanceof Customer){
+			Customer c = (Customer) o;
+			if(getId()==c.getId() && getFirstName().equals(c.getFirstName()) && getLastName().equals(c.getLastName()) && getAddress().equals(c.getAddress()) && getZipCode().equals(c.getZipCode()) && getCity().equals(c.getCity()) && getEmailAddress().equals(c.getEmailAddress())){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	
 }

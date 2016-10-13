@@ -72,7 +72,8 @@ public class SqlDb implements Database {
 				try {
 					stmt.close();
 				} catch (SQLException e1) {}
-				throw new DbException(MagicStrings.EXISTINGIDINDB.getError()+p.getId());
+				System.out.println(e.getMessage());
+				throw new DbException(MagicStrings.PRODUCTEXISTINGINDB.getError()+p.getId());
 			}
 			
 	}
@@ -111,7 +112,7 @@ public class SqlDb implements Database {
 				stmt.close();
 			}catch (Exception e1) {}
 			
-			throw new DbException(MagicStrings.NOTDELETABLE.getError());
+			throw new DbException(MagicStrings.PRODUCTNOTDELETABLEFROMDB.getError()+id);
 		}		
 	}
 
@@ -144,34 +145,35 @@ public class SqlDb implements Database {
 			try {
 				stmt.close();
 			} catch (SQLException e1) {}
-			throw new DbException();
+			throw new DbException(MagicStrings.CUSTOMEREXISTINGINDB.getError()+c.getId());
 		}
 		
 	}
 
-	public Customer getCustomer(int id) {
+	public Customer getCustomer(int id) throws DbException {
 		Customer c = null;
 		try{
 			stmt = conn.createStatement();
-			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName);
-			set.next();
-			int i = Integer.parseInt(set.getString("id"));
-			String firstName = set.getString("firstName");
-			String lastName = set.getString("lastName");
-			String address = set.getString("address");
-			String zipCode = set.getString("zipCode");
-			String city = set.getString("city");
-			String emailAddress = set.getString("emailAddress");
-			boolean subscribed = set.getString("subscribed").toLowerCase().equals("true");
-			
-			c = new Customer(i, firstName, lastName, address, zipCode, city, emailAddress, subscribed);
+			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+" WHERE id="+id);
+			while(set.next()){
+				int i = Integer.parseInt(set.getString("id"));
+				String firstName = set.getString("first_name");
+				String lastName = set.getString("last_name");
+				String address = set.getString("address");
+				String zipCode = set.getString("zip_code");
+				String city = set.getString("city");
+				String emailAddress = set.getString("email_address");
+				boolean subscribed = set.getString("subscribed").toLowerCase().equals("true");
+				
+				c = new Customer(i, firstName, lastName, address, zipCode, city, emailAddress, subscribed);
+			}
 			
 			stmt.close();
 		}catch (Exception e) {
 			try {
 				stmt.close();
 			} catch (SQLException e1) {}
-			
+			throw new DbException(MagicStrings.CUSTOMERNOTFOUNDINDB.getError()+id);
 		}
 		
 		return c;
@@ -196,15 +198,15 @@ public class SqlDb implements Database {
 		
 		try{
 			stmt = conn.createStatement();
-			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+ "WHERE subscibed=true");
+			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+ " WHERE subscribed='true'");
 			while(set.next()){
 				int i = Integer.parseInt(set.getString("id"));
-				String firstName = set.getString("firstName");
-				String lastName = set.getString("lastName");
+				String firstName = set.getString("first_name");
+				String lastName = set.getString("last_name");
 				String address = set.getString("address");
-				String zipCode = set.getString("zipCode");
+				String zipCode = set.getString("zip_code");
 				String city = set.getString("city");
-				String emailAddress = set.getString("emailAddress");
+				String emailAddress = set.getString("email_address");
 				boolean subscribed = set.getString("subscribed").toLowerCase().equals("true");
 				
 				customers.add(new Customer(i, firstName, lastName, address, zipCode, city, emailAddress, subscribed));
