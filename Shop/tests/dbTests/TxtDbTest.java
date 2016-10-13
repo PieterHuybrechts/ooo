@@ -95,7 +95,7 @@ public class TxtDbTest {
 		try{
 			db.addProduct(p);
 		}catch (DbException e) {
-			if(e.getMessage().equals(MagicStrings.EXISTINGIDINDB.getError()+p.getId())){
+			if(e.getMessage().equals(MagicStrings.PRODUCTEXISTINGINDB.getError()+p.getId())){
 				return;
 			}
 		}

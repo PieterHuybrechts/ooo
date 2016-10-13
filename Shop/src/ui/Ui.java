@@ -3,6 +3,7 @@ package ui;
 import javax.swing.JOptionPane;
 
 import db.DbException;
+import domain.Customer;
 import domain.DomainException;
 import domain.Game;
 import domain.Movie;
@@ -24,7 +25,7 @@ public class Ui {
 	}
 	
 	private void showMenu() throws DomainException{
-		String menu = "1. Add product\n2. Show product\n3. Show rental price\n4. Rent Product\n5. Return Product\n6. Repair Product\n7. Delete Product\n\n0. Quit";
+		String menu = "1. Add product\n2. Show product\n3. Show rental price\n4. Rent Product\n5. Return Product\n6. Repair Product\n7. Delete Product\n8. Add Customer\n\n0. Quit";
 		int choice = -1;
 		while (choice != 0) {
 			String choiceString = JOptionPane.showInputDialog(menu);
@@ -43,6 +44,8 @@ public class Ui {
 				showRepair();
 			} else if (choice == 7){
 				showDelete();
+			} else if (choice == 8){
+				showAddCustomer();
 			}
 		}
 	}
@@ -139,12 +142,7 @@ public class Ui {
 
 	private void showReturn() {
 		String id = JOptionPane.showInputDialog("Enter the id:");
-		int reply = JOptionPane.showConfirmDialog(null, "Is the item damaged?", "", JOptionPane.YES_NO_OPTION);
-		boolean damaged=false;
-		
-		if(reply == JOptionPane.YES_OPTION){
-			damaged = true;
-		}
+		boolean damaged=JOptionPane.showConfirmDialog(null, "Is the item damaged?", "", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION;
 		
 		try {
 			shop.returnProduct(Integer.parseInt(id),damaged);
@@ -168,6 +166,24 @@ public class Ui {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "",JOptionPane.WARNING_MESSAGE);
 		} catch (DbException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage() , "",JOptionPane.WARNING_MESSAGE);
+		}
+	}
+
+	private void showAddCustomer(){
+		int id = Integer.parseInt(JOptionPane.showInputDialog("Id:"));
+		String firstName = JOptionPane.showInputDialog("First name:");
+		String lastName = JOptionPane.showInputDialog("Last name:");
+		String address = JOptionPane.showInputDialog("Address:");
+		String zipCode = JOptionPane.showInputDialog("ZIP code:");
+		String city = JOptionPane.showInputDialog("City:");
+		String eMailAddress = JOptionPane.showInputDialog("EMail address:");
+		boolean subscribed = JOptionPane.showConfirmDialog(null, "Subscribe to newsletter?", "", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION;
+		
+		try {
+			Customer c = new Customer(id, firstName, lastName, address, zipCode, city, eMailAddress, subscribed);
+			shop.addCustomer(c);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(),"",JOptionPane.WARNING_MESSAGE);
 		}
 	}
 }

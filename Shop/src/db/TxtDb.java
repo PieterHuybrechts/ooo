@@ -53,7 +53,7 @@ public class TxtDb implements Database{
 		}
 		
 		if(pr!=null){
-			throw new DbException(MagicStrings.EXISTINGIDINDB.getError()+p.getId());
+			throw new DbException(MagicStrings.PRODUCTEXISTINGINDB.getError()+p.getId());
 		}
 		
 		String output = "";

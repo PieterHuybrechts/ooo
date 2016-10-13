@@ -40,7 +40,7 @@ public class ShopTest {
 	public void cleanUp(){
 		for(int i:products.keySet()){
 			try{
-				shop.removeFromDb(products.get(i).getId());
+				shop.removeProductFromDb(products.get(i).getId());
 			}catch (DbException e){
 				
 			}
@@ -64,7 +64,7 @@ public class ShopTest {
 		try{
 			shop.addProduct(p);
 		}catch(DbException e){
-			if(e.getMessage().equals(MagicStrings.EXISTINGIDINDB.getError()+id)){
+			if(e.getMessage().equals(MagicStrings.PRODUCTEXISTINGINDB.getError()+id)){
 				return;
 			}
 		}

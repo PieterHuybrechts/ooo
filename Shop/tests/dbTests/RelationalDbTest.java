@@ -28,7 +28,7 @@ public class RelationalDbTest {
 	Map<Integer,Customer> customers;
 	
 	@Before
-	public void setUp() throws DbException, DomainException, SQLException{
+	public void setUp() throws DbException, DomainException, SQLException, InterruptedException{
 		db = new SqlDb();
 		
 		products = new HashMap<Integer,Product>();
@@ -42,6 +42,7 @@ public class RelationalDbTest {
 		customers.put(1, new Customer(756689, "testFirst2", "testLast2", "teststraat 1232", "1234", "Testcity2", "test2.test2@test.com", true));
 		
 		for(int i : products.keySet()){
+			Thread.sleep(1);
 			db.addProduct(products.get(i));
 		}
 		
@@ -85,7 +86,7 @@ public class RelationalDbTest {
 	
 	@Test
 	public void testAddProductSucces() throws DomainException, DbException{
-		Product p = new Game(2, "addProductTest", ProductStateEnum.RENTABLE);
+		Product p = new Game(7413565, "addProductTest", ProductStateEnum.RENTABLE);
 		products.put(3, p);
 		
 		db.addProduct(p);
@@ -203,8 +204,6 @@ public class RelationalDbTest {
 	@Test
 	public void testGetAllCustomers() throws DbException{
 		
-		fail();
-		
 		List<Customer> dbCustomers = db.getAllCustomers();
 		List<Customer> newList = new ArrayList<Customer>();
 		for(int i : customers.keySet()){
@@ -225,13 +224,28 @@ public class RelationalDbTest {
 	}
 	
 	@Test
-	public void testGetAllSubscribedCustomers(){
-		//TODO
+	public void testGetAllSubscribedCustomers() throws DbException{
+		List<Customer> subscribed = new ArrayList<Customer>();
+		for(int i : customers.keySet()){		
+			Customer c = customers.get(i);
+			if(c.isSubscribed()){
+				subscribed.add(c);
+			}
+		}
+		
+		List<Customer> dbSubscribed = db.getAllSubscribedCustomers();
+		if(dbSubscribed.size()==subscribed.size() && dbSubscribed.containsAll(subscribed)){
+			return;
+		}else{
+			fail();
+		}
 	}
 	
 	@Test
-	public void testGetLastAddedProduct(){
-		//TODO
+	public void testGetLastAddedProduct() throws DbException{
+		Product expected=products.get(2);
+		Product actual=db.getLastAddedProduct();
+		assertEquals(expected,actual);
 	}
 	
 	

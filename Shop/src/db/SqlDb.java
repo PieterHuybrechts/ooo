@@ -72,7 +72,6 @@ public class SqlDb implements Database {
 				try {
 					stmt.close();
 				} catch (SQLException e1) {}
-				System.out.println(e.getMessage());
 				throw new DbException(MagicStrings.PRODUCTEXISTINGINDB.getError()+p.getId());
 			}
 			
@@ -127,7 +126,6 @@ public class SqlDb implements Database {
 			try {
 				stmt.close();
 			} catch (SQLException e1) {}
-			System.out.println(e.getMessage());
 			throw new DbException("Could not update this product");
 		}
 		
@@ -228,7 +226,7 @@ public class SqlDb implements Database {
 		
 		try{
 			stmt = conn.createStatement();
-			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+ "WHERE subscibed=true");
+			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+ " WHERE subscribed='true'");
 			while(set.next()){
 				int i = Integer.parseInt(set.getString("id"));
 				String firstName = set.getString("first_name");
@@ -242,7 +240,7 @@ public class SqlDb implements Database {
 				customers.add(new Customer(i, firstName, lastName, address, zipCode, city, emailAddress, subscribed));
 			}
 			stmt.close();
-		}catch (Exception e){
+		}catch (Exception e){			
 			try {
 				stmt.close();
 			} catch (SQLException e1) {}
@@ -257,7 +255,7 @@ public class SqlDb implements Database {
 		Product p = null;
 		try{
 			stmt = conn.createStatement();
-			ResultSet set = stmt.executeQuery("SELECT * FROM " + productsTableName + " WHERE DateCreated IN (SELECT max(date_created) FROM "+productsTableName+")");
+			ResultSet set = stmt.executeQuery("SELECT * FROM " + productsTableName + " WHERE time_stamp IN (SELECT max(time_stamp) FROM "+productsTableName+")");
 			set.next();
 			int i = Integer.parseInt(set.getString("id"));
 			String name = set.getString("title");
@@ -273,7 +271,6 @@ public class SqlDb implements Database {
 			try {
 				stmt.close();
 			} catch (SQLException e1) {}
-		
 			throw new DbException("Couldn't find the last added product");
 		}
 		return p;
