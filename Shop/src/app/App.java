@@ -5,7 +5,9 @@ import domain.DomainException;
 import domain.EMailService;
 import domain.Observer;
 import domain.Shop;
-import ui.Ui;
+import ui.MenuPanel;
+import ui.ShopFrame;
+//import ui.Ui;
 
 public class App {
 
@@ -14,7 +16,11 @@ public class App {
 		Observer eMailService = new EMailService(shop);
 		shop.addObserver(eMailService);
 		
-		new Ui(shop);
+		ShopFrame frame = new ShopFrame();
+		frame.setContentPane(new MenuPanel(shop));
+		frame.start();
+		
+		//new Ui(shop);
 	}
 	
 }
