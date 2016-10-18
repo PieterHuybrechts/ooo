@@ -25,8 +25,8 @@ public enum MagicStrings {
 	NOTRENTABLE("This item can't be rented."),
 	NOTRETURNABLE("This item can't be returned."),
 	NOTDELETABLE("This item can't be deleted."),
-	NOTREPAIRABLE("This item can't be repaired.");
-	
+	NOTREPAIRABLE("This item can't be repaired."),
+	FACTORYERROR("Couldn't create this product.");
 	
 	private final String ERROR;
 	

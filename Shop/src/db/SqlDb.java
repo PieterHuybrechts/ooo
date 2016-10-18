@@ -2,6 +2,7 @@ package db;
 
 import domain.Customer;
 import domain.Product;
+import domain.ProductFactory;
 import domain.ProductStateEnum;
 
 import java.lang.reflect.Constructor;
@@ -74,7 +75,6 @@ public class SqlDb implements Database {
 				} catch (SQLException e1) {}
 				throw new DbException(MagicStrings.PRODUCTEXISTINGINDB.getError()+p.getId());
 			}
-			
 	}
 
 	public Product getProduct(int id) throws DbException{
@@ -84,14 +84,12 @@ public class SqlDb implements Database {
 			
 			set.next();
 			int i = Integer.parseInt(set.getString("id"));
-			String name = set.getString("title");
-			String classStr = set.getString("class");
-			String stateStr = set.getString("state");
+			String title = set.getString("title");
+			String className = set.getString("class");
+			ProductStateEnum state = ProductStateEnum.valueOf(set.getString("state"));
 			stmt.close();
 			
-			Class<?> clazz = Class.forName(classStr);
-			Constructor<?> ctor = clazz.getConstructor(int.class,String.class,ProductStateEnum.class);
-			return (Product)ctor.newInstance((i),name,ProductStateEnum.valueOf(stateStr));	
+			return ProductFactory.createProduct(className, i, title, state);
 			
 		}catch(Exception e){
 			try{
