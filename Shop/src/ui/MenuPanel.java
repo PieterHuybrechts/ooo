@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -24,6 +25,7 @@ public class MenuPanel extends JPanel{
 	private static final long serialVersionUID = -1078767362753449796L;
 	
 	private Shop shop;
+	private ShopFrame frame;
 	
 	private JButton addProductButton;
 	private JButton showProductButton;
@@ -35,8 +37,9 @@ public class MenuPanel extends JPanel{
 	private JButton addCustomerButton;
 	private JButton quitButton;
 	
-	public MenuPanel(Shop shop){
+	public MenuPanel(Shop shop,ShopFrame frame){
 		this.shop=shop;
+		this.frame = frame;
 		
 		this.addProductButton = new JButton("Add product");
 		addProductButton.addActionListener(new AddProductListener());
@@ -77,7 +80,7 @@ public class MenuPanel extends JPanel{
 
 	private class AddProductListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			String title = JOptionPane.showInputDialog("Enter the title:");
+			/*String title = JOptionPane.showInputDialog("Enter the title:");
 			int id;
 			try{
 				id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
@@ -85,17 +88,23 @@ public class MenuPanel extends JPanel{
 				Product p=null;
 				
 				if(type.toLowerCase().equals("m")){
-					p = new Movie(id,title,ProductStateEnum.RENTABLE);
+					//p = new Movie(id,title,ProductStateEnum.RENTABLE);
 				}else if(type.toLowerCase().equals("g")){
-					p= new Game(id,title,ProductStateEnum.RENTABLE);
+					//p= new Game(id,title,ProductStateEnum.RENTABLE);
 				}
+				
+				
+				
 				
 				shop.addProduct(p);
 			}catch(NumberFormatException ex){
 				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(),"",JOptionPane.WARNING_MESSAGE);
-			}
+			}*/
+			
+			frame.setContentPane(new AddProductPanel(shop,frame));
+			frame.start();
 		}
 		
 	}

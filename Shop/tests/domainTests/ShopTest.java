@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import app.MagicStrings;
 import db.DbException;
+import db.SqlDb;
 import domain.Shop;
 import domain.DomainException;
 import domain.Game;
@@ -25,7 +26,7 @@ public class ShopTest {
 	
 	@Before
 	public void setUp() throws Exception{
-		this.shop = new Shop();
+		this.shop = new Shop(new SqlDb());
 		this.products = new HashMap<Integer, Product>();
 		products.put(0, new Game(321698,"testGame",ProductStateEnum.RENTABLE));
 		products.put(1, new Movie(12357,"testMovie",ProductStateEnum.DAMAGED));

@@ -5,16 +5,15 @@ import java.util.List;
 
 import db.Database;
 import db.DbException;
-import db.SqlDb;
 
 public class Shop implements Subject{
 	
 	private Database db;
 	private List<Observer> observers;
 	
-	public Shop() throws DbException{
+	public Shop(Database db) throws DbException{
 		observers=new ArrayList<Observer>();
-		db=new SqlDb();
+		this.db = db;
 	}
 	
 	public void addProduct(Product p) throws DbException{

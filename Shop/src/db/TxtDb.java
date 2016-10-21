@@ -32,6 +32,10 @@ public class TxtDb implements Database{
 		
 		if(!this.getFile().exists()){
 			try {
+				File dir = new File(file.getParent());
+				if(!dir.exists()){
+					dir.mkdir();
+				}
 				this.getFile().createNewFile();
 			} catch (IOException e) {
 				throw new DbException(MagicStrings.DBCREATIONERROR.getError());

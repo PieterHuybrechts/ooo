@@ -5,10 +5,6 @@ import java.lang.reflect.Constructor;
 import app.MagicStrings;
 
 public class ProductFactory {
-
-	public ProductFactory(){
-		
-	}
 	
 	public static Product createProduct(String className, int id, String title, ProductStateEnum state) throws DomainException{
 		Product p = null;
