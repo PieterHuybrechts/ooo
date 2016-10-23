@@ -9,7 +9,9 @@ import java.util.Map;
 import org.junit.*;
 
 import app.MagicStrings;
+import app.PropertiesEnum;
 import db.Database;
+import db.DatabaseFactory;
 import db.DbException;
 import db.TxtDb;
 import domain.DomainException;
@@ -25,7 +27,7 @@ public class TxtDbTest {
 	
 	@Before
 	public void setUp() throws DbException, DomainException{
-		db = new TxtDb("resources/shopDb");
+		db = DatabaseFactory.createDb(TxtDb.class.getName(),PropertiesEnum.DBURL.getProperty());
 		products = new HashMap<Integer,Product>();
 		
 		products.put(0,new Game(75311, "testGame" ,ProductStateEnum.RENTED));
