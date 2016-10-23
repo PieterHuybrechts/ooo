@@ -17,23 +17,22 @@ import java.util.List;
 import app.MagicStrings;
 import db.DbException;
 
-public class SqlDb implements Database {
+public class DerbyDb implements Database {
 
-	
-	private static String dbURL = "jdbc:derby:resources/shopDb;create=true";
 	private static String productsTableName = "products";
 	private static String customersTableName = "customers";
 	private static Connection conn = null;
 	private static Statement stmt =null;
 	
-	public SqlDb() throws DbException{
-		conn = this.createConnection();
+	public DerbyDb(String url) throws DbException{
+		String dbUrl = String.format("jdbc:derby:%s;create=true",url);
+		conn = this.createConnection(dbUrl);
 		createTables();
 	}
 	
-	private Connection createConnection() throws DbException{
+	private Connection createConnection(String url) throws DbException{
 		try{
-			return DriverManager.getConnection(dbURL);
+			return DriverManager.getConnection(url);
 		}catch(SQLException e){
 			throw new DbException(e.getMessage());
 		}

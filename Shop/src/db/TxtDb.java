@@ -22,8 +22,8 @@ public class TxtDb implements Database{
 	private File file;
 	private String delimiter;
 	
-	public TxtDb() throws DbException {
-		setFile(new File("resources\\db.txt"));
+	public TxtDb(String url) throws DbException {
+		setFile(new File(String.format("%s.txt", url)));
 		delimiter = ";";
 	}
 	

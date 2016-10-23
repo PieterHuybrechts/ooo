@@ -25,7 +25,7 @@ public class TxtDbTest {
 	
 	@Before
 	public void setUp() throws DbException, DomainException{
-		db = new TxtDb();
+		db = new TxtDb("resources/shopDb");
 		products = new HashMap<Integer,Product>();
 		
 		products.put(0,new Game(75311, "testGame" ,ProductStateEnum.RENTED));

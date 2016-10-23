@@ -11,7 +11,7 @@ import java.util.Properties;
 import db.Database;
 import db.DatabaseFactory;
 import db.DbException;
-import db.SqlDb;
+import db.DerbyDb;
 import domain.DomainException;
 import domain.EMailService;
 import domain.Observer;
@@ -22,28 +22,38 @@ import ui.ShopFrame;
 public class App {
 
 	public static void main(String[] args) throws DomainException, DbException, IOException{
-		
 		File configFile = new File("cfg\\config.cfg");
-		Properties props = new Properties();
 		
 		if(!configFile.exists()){
+			Properties props = new Properties();
 			File dir = new File(configFile.getParent());
 			if(!dir.exists()){
 				dir.mkdir();
 			}
 			configFile.createNewFile();
-			props.put("db", SqlDb.class.getName());
+			props.put("dbUrl", "resources/shopDb");
+			props.put("dbType", DerbyDb.class.getName());
 			
 			OutputStream out = new FileOutputStream(configFile);
-			props.store(out, "#####################\n#\n# Properties\n#\n#####################");
-			out.close();
+			String message=
+					  "#################################################################################################################\n"
+					+ "#\n"
+					+ "#    _____    __                             ____                                          __     _\n"
+					+ "#   / ___/   / /_   ____     ____           / __ \\   _____  ____     ____   ___    _____  / /_   (_)  ___    _____\n"
+					+ "#   \\__ \\   / __ \\ / __ \\   / __ \\         / /_/ /  / ___/ / __ \\   / __ \\ / _ \\  / ___/ / __/  / /  / _ \\  / ___/\n"
+					+ "#  ___/ /  / / / // /_/ /  / /_/ /        / ____/  / /    / /_/ /  / /_/ //  __/ / /    / /_   / /  /  __/ (__  ) \n"
+					+ "# /____/  /_/ /_/ \\____/  / .___/        /_/      /_/     \\____/  / .___/ \\___/ /_/     \\__/  /_/   \\___/ /____/  \n"
+					+ "#                        /_/                                     /_/\n"
+					+ "#\n"
+					+ "#################################################################################################################\n";
 			
-		}else{
-			InputStream in = new FileInputStream(configFile);
-			props.load(in);
+			props.store(out, message);
+			out.close();
 		}
 		
-		Database db = DatabaseFactory.createDb((String)props.get("db"));
+		
+		
+		Database db = DatabaseFactory.createDb(PropertiesEnum.DBTYPE.getProperty(),PropertiesEnum.DBURL.getProperty());
 		
 		Shop shop = new Shop(db);
 		Observer eMailService = new EMailService(shop);

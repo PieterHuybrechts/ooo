@@ -2,18 +2,25 @@ package dbTests;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
+import javax.swing.JOptionPane;
 
 import org.junit.*;
 
 import app.MagicStrings;
 import db.DbException;
-import db.SqlDb;
+import db.DerbyDb;
 import domain.Customer;
 import domain.DomainException;
 import domain.Game;
@@ -23,13 +30,25 @@ import domain.ProductStateEnum;
 
 public class RelationalDbTest {
 	
-	SqlDb db;
+	DerbyDb db;
 	Map<Integer,Product> products;
 	Map<Integer,Customer> customers;
 	
 	@Before
 	public void setUp() throws DbException, DomainException, SQLException, InterruptedException{
-		db = new SqlDb();
+		Properties props = new Properties();
+		File confFile = new File("cfg\\config.cfg");
+		InputStream in;
+		try {
+			in = new FileInputStream(confFile);
+			props.load(in);
+		} catch (Exception e){
+			JOptionPane.showMessageDialog(null, "The app should be ran before running the tests","Warning", JOptionPane.WARNING_MESSAGE);
+		}
+		
+		
+		
+		db = new DerbyDb(props.getProperty("dburl"));
 		
 		products = new HashMap<Integer,Product>();
 		products.put(0,new Game(75311, "testGame" ,ProductStateEnum.RENTED));

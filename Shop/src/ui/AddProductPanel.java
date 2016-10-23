@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -63,12 +62,11 @@ public class AddProductPanel extends JPanel{
 	
 	private class AddButtonListener implements ActionListener{
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
 			String title = titleField.getText();
 			int id = Integer.parseInt(idField.getText());
-			String className = ProductTypeEnum.valueOf((String)typeComboBox.getSelectedItem()).getClassName();
-			ProductStateEnum state = ProductStateEnum.valueOf((String)stateComboBox.getSelectedItem());
+			String className = ProductTypeEnum.valueOf(typeComboBox.getSelectedItem().toString()).getClassName();
+			ProductStateEnum state = ProductStateEnum.valueOf(stateComboBox.getSelectedItem().toString());
 			
 			
 			

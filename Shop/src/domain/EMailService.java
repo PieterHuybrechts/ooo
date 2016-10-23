@@ -50,6 +50,7 @@ public class EMailService implements Observer {
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			throw new DomainException(e.getMessage(), e);
 		}
 	}
@@ -86,11 +87,12 @@ public class EMailService implements Observer {
 						+ "\tId: "+p.getId()+"\n"
 						+ "\tTitle: "+p.getTitle();
 		
-		
-		try {
-			sendFromGMail(subject, body, addresses);
-		} catch (DomainException e) {
-			e.printStackTrace();
+		if(addresses.length!=0){
+			try {
+				sendFromGMail(subject, body, addresses);
+			} catch (DomainException e) {
+				e.printStackTrace();
+			}			
 		}
 	}
 
