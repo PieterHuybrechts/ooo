@@ -5,7 +5,7 @@ import domain.EMailService;
 import domain.Observer;
 import domain.Shop;
 import ui.MenuPanel;
-import ui.MainWindow;
+import ui.ShopFrame;
 
 public class App {
 
@@ -16,7 +16,7 @@ public class App {
 		Observer eMailService = new EMailService(shop);
 		shop.addObserver(eMailService);
 		
-		MainWindow frame = new MainWindow();
+		ShopFrame frame = new ShopFrame();
 		frame.setContentPane(new MenuPanel(shop,frame));
 		frame.start();
 	}

@@ -23,7 +23,7 @@ public class AddProductPanel extends JPanel{
 	private static final long serialVersionUID = -4118631129545139359L;
 
 	private Shop shop;
-	private MainWindow frame;
+	private ShopFrame frame;
 	
 	private JLabel titleLabel = new JLabel("title: ");
 	private JLabel idLabel = new JLabel("id: ");
@@ -37,7 +37,7 @@ public class AddProductPanel extends JPanel{
 	
 	private JButton addButton = new JButton("Add");
 	
-	public AddProductPanel(Shop shop, MainWindow frame){
+	public AddProductPanel(Shop shop, ShopFrame frame){
 		this.shop=shop;
 		this.frame = frame;
 		

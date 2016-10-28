@@ -19,7 +19,7 @@ public class MenuPanel extends JPanel{
 	private static final long serialVersionUID = -1078767362753449796L;
 	
 	private Shop shop;
-	private MainWindow frame;
+	private ShopFrame frame;
 	
 	private JButton addProductButton;
 	private JButton showProductButton;
@@ -31,7 +31,7 @@ public class MenuPanel extends JPanel{
 	private JButton addCustomerButton;
 	private JButton quitButton;
 	
-	public MenuPanel(Shop shop,MainWindow frame){
+	public MenuPanel(Shop shop,ShopFrame frame){
 		this.shop=shop;
 		this.frame = frame;
 		
