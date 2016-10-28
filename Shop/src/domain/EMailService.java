@@ -9,8 +9,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import db.DbException;
-
 public class EMailService implements Observer {
 
 	private Shop shop;
@@ -59,7 +57,7 @@ public class EMailService implements Observer {
 		List<Customer> customers=null;
 		try {
 			customers = shop.getAllSubscribedCustomers();
-		} catch (DbException e) {}
+		} catch (DomainException e) {}
 
 		String[] addresses=new String[customers.size()];
 		
@@ -71,15 +69,7 @@ public class EMailService implements Observer {
 		
 		try {
 			p = shop.getLastAddedProduct();
-		} catch (DbException e) {}
-		
-		/*for(Customer c :customers){
-			System.out.println("Send mail to "+c.getEmailAddress()+":\n"
-							+ "A new product was added to the shop:\n"
-							+ "------------------------------------\n"
-								+ "\tId: "+p.getId()+"\n"
-								+ "\tTitle: "+p.getTitle());
-		}*/
+		} catch (DomainException e) {}
 		
 		String subject="New product added to the shop.";
 		String body = "A new product was added to the shop:\n"

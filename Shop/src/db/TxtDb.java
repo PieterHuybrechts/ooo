@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Scanner;
 
-import app.MagicStrings;
+import common.MagicStrings;
 import domain.Customer;
 import domain.Product;
 import domain.ProductStateEnum;

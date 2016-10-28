@@ -14,7 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.MagicStrings;
+import common.MagicStrings;
 import db.DbException;
 
 public class DerbyDb implements Database {

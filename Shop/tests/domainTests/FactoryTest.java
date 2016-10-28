@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import app.MagicStrings;
+import common.MagicStrings;
 import domain.Customer;
 import domain.DomainException;
 import domain.Game;

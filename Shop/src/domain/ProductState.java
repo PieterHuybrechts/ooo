@@ -1,6 +1,6 @@
 package domain;
 
-import app.MagicStrings;
+import common.MagicStrings;
 
 public class ProductState{
 
