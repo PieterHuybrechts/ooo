@@ -7,8 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import db.DbException;
-import domain.Customer;
 import domain.DomainException;
 import domain.Product;
 import domain.Shop;
@@ -21,7 +19,7 @@ public class MenuPanel extends JPanel{
 	private static final long serialVersionUID = -1078767362753449796L;
 	
 	private Shop shop;
-	private ShopFrame frame;
+	private MainWindow frame;
 	
 	private JButton addProductButton;
 	private JButton showProductButton;
@@ -33,7 +31,7 @@ public class MenuPanel extends JPanel{
 	private JButton addCustomerButton;
 	private JButton quitButton;
 	
-	public MenuPanel(Shop shop,ShopFrame frame){
+	public MenuPanel(Shop shop,MainWindow frame){
 		this.shop=shop;
 		this.frame = frame;
 		
@@ -115,7 +113,7 @@ public class MenuPanel extends JPanel{
 				p=shop.getProduct(Integer.parseInt(id));
 			} catch (NumberFormatException ex) {
 				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-			} catch (DbException ex) {
+			} catch (DomainException ex) {
 				JOptionPane.showMessageDialog(null,ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
 			}
 			
@@ -137,7 +135,7 @@ public class MenuPanel extends JPanel{
 				p=shop.getProduct(Integer.parseInt(id));
 			} catch (NumberFormatException ex) {
 				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-			} catch (DbException ex) {
+			} catch (DomainException ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 			}
 			
@@ -161,8 +159,6 @@ public class MenuPanel extends JPanel{
 				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
 			} catch (DomainException ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
-			} catch (DbException ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		
@@ -179,8 +175,6 @@ public class MenuPanel extends JPanel{
 				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
 			} catch (DomainException ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
-			} catch (DbException ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		
@@ -196,8 +190,6 @@ public class MenuPanel extends JPanel{
 				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
 			} catch (DomainException ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
-			} catch (DbException ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 			}
 			
 		}
@@ -214,17 +206,13 @@ public class MenuPanel extends JPanel{
 				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
 			} catch (DomainException ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
-			} catch (DbException ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage() , "",JOptionPane.WARNING_MESSAGE);
 			}
 		}
 		
 	}
 	private class AddCustomerButtonListener implements ActionListener{
 
-		public void actionPerformed(ActionEvent e) {
-			
-			
+		public void actionPerformed(ActionEvent e) {			
 			try {
 				int id = Integer.parseInt(JOptionPane.showInputDialog("Id:"));
 				String firstName = JOptionPane.showInputDialog("First name:");
@@ -234,13 +222,11 @@ public class MenuPanel extends JPanel{
 				String city = JOptionPane.showInputDialog("City:");
 				String eMailAddress = JOptionPane.showInputDialog("EMail address:");
 				boolean subscribed = JOptionPane.showConfirmDialog(null, "Subscribe to newsletter?", "", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION;
-				Customer c = new Customer(id, firstName, lastName, address, zipCode, city, eMailAddress, subscribed);
-				shop.addCustomer(c);
+				shop.addCustomer(id,firstName,lastName,address,zipCode,city,eMailAddress,subscribed);
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, ex.getMessage(),"",JOptionPane.WARNING_MESSAGE);
 			}
 		}
-		
 	}
 	private class QuitButtonListener implements ActionListener{
 

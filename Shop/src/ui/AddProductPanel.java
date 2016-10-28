@@ -10,10 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import db.DbException;
 import domain.DomainException;
-import domain.Product;
-import domain.ProductFactory;
 import domain.ProductStateEnum;
 import domain.ProductTypeEnum;
 import domain.Shop;
@@ -26,7 +23,7 @@ public class AddProductPanel extends JPanel{
 	private static final long serialVersionUID = -4118631129545139359L;
 
 	private Shop shop;
-	private ShopFrame frame;
+	private MainWindow frame;
 	
 	private JLabel titleLabel = new JLabel("title: ");
 	private JLabel idLabel = new JLabel("id: ");
@@ -40,7 +37,7 @@ public class AddProductPanel extends JPanel{
 	
 	private JButton addButton = new JButton("Add");
 	
-	public AddProductPanel(Shop shop, ShopFrame frame){
+	public AddProductPanel(Shop shop, MainWindow frame){
 		this.shop=shop;
 		this.frame = frame;
 		
@@ -68,15 +65,10 @@ public class AddProductPanel extends JPanel{
 			String className = ProductTypeEnum.valueOf(typeComboBox.getSelectedItem().toString()).getClassName();
 			ProductStateEnum state = ProductStateEnum.valueOf(stateComboBox.getSelectedItem().toString());
 			
-			
-			
 			try {
-				Product p = ProductFactory.createProduct(className, id, title, state);
-				shop.addProduct(p);
+				shop.addProduct(className, id, title, state);
 			} catch (DomainException e1) {
-				JOptionPane.showMessageDialog(null,"Product could not be created");
-			} catch (DbException e1) {
-				JOptionPane.showMessageDialog(null, "Product could not be added to the database");
+				JOptionPane.showMessageDialog(null, e1.getMessage(),"",JOptionPane.ERROR_MESSAGE);
 			}
 			
 			frame.setContentPane(new MenuPanel(shop,frame));

@@ -2,7 +2,7 @@ package domain;
 
 import java.lang.reflect.Constructor;
 
-import app.MagicStrings;
+import common.MagicStrings;
 
 public class ProductFactory {
 	

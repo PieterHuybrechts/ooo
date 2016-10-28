@@ -1,4 +1,4 @@
-package app;
+package common;
 
 public enum MagicStrings {
 	NOTIMPLEMENTED("Functionality not yet implemented"),

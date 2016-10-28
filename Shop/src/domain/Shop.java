@@ -3,7 +3,9 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.PropertiesEnum;
 import db.Database;
+import db.DatabaseFactory;
 import db.DbException;
 
 public class Shop implements Subject{
@@ -16,67 +18,135 @@ public class Shop implements Subject{
 		this.db = db;
 	}
 	
-	public void addProduct(Product p) throws DbException{
-		db.addProduct(p);
-		notifyObservers();
+	public Shop() throws DbException{
+		observers = new ArrayList<Observer>();
+		this.db=DatabaseFactory.createDb(PropertiesEnum.DBTYPE.getProperty(), PropertiesEnum.DBURL.getProperty());
 	}
 	
-	public Product getProduct(int id) throws DbException{
-		return db.getProduct(id);
+	public void addProduct(Product p) throws DomainException{
+		try{
+			db.addProduct(p);
+			notifyObservers();
+		}catch(DbException e){
+			throw new DomainException(e);
+		}
 	}
 	
-	public void removeProductFromDb(int id) throws DbException{
-		db.deleteProduct(id);
+	public void addProduct(String className,int id,String title,ProductStateEnum state) throws DomainException{
+		addProduct(ProductFactory.createProduct(className, id, title, state));
 	}
 	
-	public Product getLastAddedProduct() throws DbException{
-		return db.getLastAddedProduct();
+	public Product getProduct(int id) throws DomainException{
+		try{
+			return db.getProduct(id);			
+		}catch(DbException e){
+			throw new DomainException(e.getMessage());
+		}
 	}
 	
-	public void rentProduct(int id) throws DomainException, DbException{
+	public void removeProductFromDb(int id) throws DomainException{
+		try{			
+			db.deleteProduct(id);
+		}catch(DbException e){
+			throw new DomainException(e);
+		}
+	}
+	
+	public Product getLastAddedProduct() throws DomainException{
+		try{
+			return db.getLastAddedProduct();
+		}catch(DbException e){
+			throw new DomainException(e.getMessage());
+		}
+	}
+	
+	public void rentProduct(int id) throws DomainException{
 		Product p = getProduct(id);
 		p.rent();
-		db.updateProduct(p);
+		try{
+			db.updateProduct(p);
+		}catch(DbException e){
+			throw new DomainException(e.getMessage());
+		}
+		
 	}
 	
-	public void returnProduct(int id,boolean damaged) throws DomainException, DbException{
+	public void returnProduct(int id,boolean damaged) throws DomainException{
 		Product p = getProduct(id);
 		p.returnToShop(damaged);
-		db.updateProduct(p);
+		try {
+			db.updateProduct(p);
+		} catch (DbException e) {
+			throw new DomainException(e.getMessage());
+		}
 	}
 	
-	public void deleteProduct(int id) throws DomainException, DbException{
+	public void deleteProduct(int id) throws DomainException{
 		Product p = getProduct(id);
 		p.delete();
-		db.updateProduct(p);
+		try {
+			db.updateProduct(p);
+		} catch (DbException e) {
+			throw new DomainException(e.getMessage());
+		}
 	}
 	
-	public void repairProduct(int id) throws DbException, DomainException{
+	public void repairProduct(int id) throws DomainException{
 		Product p = getProduct(id);
 		p.repair();
-		db.updateProduct(p);
+		try {
+			db.updateProduct(p);
+		} catch (DbException e) {
+			throw new DomainException(e.getMessage());
+		}
 	}
 	
 	
 	
-	public void addCustomer(Customer c) throws DbException {
+	/*public void addCustomer(Customer c) throws DbException {
 		db.addCustomer(c);
+	}*/
+	
+	public void addCustomer(int id, String firstName, String lastName, String address, String zipCode, String city, String eMailAddress, boolean subscribed) throws DomainException{
+		Customer c = CustomerFactory.create(id, firstName, lastName, address, zipCode, city, eMailAddress, subscribed);
+		try {
+			db.addCustomer(c);
+		} catch (DbException e) {
+			throw new DomainException("There already is a customer registered with this id.");
+		}
 	}
 	
-	public Customer getCustomer(int id) throws DbException{
-		return db.getCustomer(id);
+	public Customer getCustomer(int id) throws DomainException {
+		try {
+			return db.getCustomer(id);
+		} catch (DbException e) {
+			throw new DomainException(e.getMessage());
+		}
 	}
 	
-	public void removeCustomerFromDb(int id) throws DbException{
-		db.deleteCustomer(id);
+	public void removeCustomerFromDb(int id){
+		try {
+			db.deleteCustomer(id);
+		} catch (DbException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public List<Customer> getAllSubscribedCustomers() throws DbException{
-		return db.getAllSubscribedCustomers();
+	public List<Customer> getAllSubscribedCustomers() throws DomainException{
+		try {
+			return db.getAllSubscribedCustomers();
+		} catch (DbException e) {
+			throw new DomainException(e.getMessage());
+		}
 	}
 	
-	public List<Customer> getAllCustomers() throws DbException{
-		return db.getAllCustomers();
+	public List<Customer> getAllCustomers() throws DomainException{
+		try {
+			return db.getAllCustomers();
+		} catch (DbException e) {
+			throw new DomainException(e.getMessage());
+		}
 	}
 	
 	public void addObserver(Observer o) {
@@ -95,5 +165,7 @@ public class Shop implements Subject{
 			o.update();
 		}		
 	}
+
+
 
 }

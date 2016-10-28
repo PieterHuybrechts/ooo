@@ -11,8 +11,8 @@ import java.util.Map;
 
 import org.junit.*;
 
-import app.MagicStrings;
-import app.PropertiesEnum;
+import common.MagicStrings;
+import common.PropertiesEnum;
 import db.Database;
 import db.DatabaseFactory;
 import db.DbException;

@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import app.MagicStrings;
+import common.MagicStrings;
 import db.DbException;
 import db.DerbyDb;
 import domain.Shop;
@@ -38,13 +38,9 @@ public class ShopTest {
 	}
 	
 	@After
-	public void cleanUp(){
+	public void cleanUp() throws DomainException{
 		for(int i:products.keySet()){
-			try{
-				shop.removeProductFromDb(products.get(i).getId());
-			}catch (DbException e){
-				
-			}
+			shop.removeProductFromDb(products.get(i).getId());
 		}
 		shop=null;
 		products=null;
@@ -64,7 +60,7 @@ public class ShopTest {
 		Product p = new Movie(id,"title",ProductStateEnum.RENTABLE);
 		try{
 			shop.addProduct(p);
-		}catch(DbException e){
+		}catch(DomainException e){
 			if(e.getMessage().equals(MagicStrings.PRODUCTEXISTINGINDB.getError()+id)){
 				return;
 			}
@@ -73,7 +69,7 @@ public class ShopTest {
 	}
 	
 	@Test
-	public void testGetProductSuccess() throws DbException{
+	public void testGetProductSuccess() throws DomainException{
 		Product expected = products.get(0);
 		Product actual = shop.getProduct(expected.getId());
 		
@@ -85,7 +81,7 @@ public class ShopTest {
 		int id=654951;
 		try{
 			shop.getProduct(id);
-		}catch(DbException e){
+		}catch(DomainException e){
 			if(e.getMessage().equals(MagicStrings.PRODUCTNOTFOUNDINDB.getError()+id)){
 				return;
 			}
