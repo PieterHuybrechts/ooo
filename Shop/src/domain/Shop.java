@@ -79,12 +79,12 @@ public class Shop implements Subject{
 		return db.getAllCustomers();
 	}
 	
-	
-	
 	public void addObserver(Observer o) {
 		observers.add(o);
 	}
 
+	
+	
 	public void deleteObserver(Observer o) {
 		observers.remove(o);
 		
@@ -93,8 +93,7 @@ public class Shop implements Subject{
 	public void notifyObservers() {
 		for(Observer o : observers){
 			o.update();
-		}
-		
+		}		
 	}
 
 }
