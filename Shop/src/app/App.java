@@ -20,6 +20,9 @@ import ui.ShopFrame;
 public class App {
 
 	public static void main(String[] args) throws DomainException, DbException, IOException{
+		
+		//Branch test
+		
 		File configFile = new File("cfg\\config.cfg");
 		
 		if(!configFile.exists()){
