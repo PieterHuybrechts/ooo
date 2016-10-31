@@ -13,7 +13,7 @@ import common.PropertiesEnum;
 import db.Database;
 import db.DatabaseFactory;
 import db.DbException;
-import db.TxtDb;
+import db.concrete.TxtDb;
 import domain.DomainException;
 import domain.Game;
 import domain.Movie;

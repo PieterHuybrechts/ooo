@@ -59,31 +59,34 @@ public class EMailService implements Observer {
 			customers = shop.getAllSubscribedCustomers();
 		} catch (DomainException e) {}
 
-		String[] addresses=new String[customers.size()];
-		
-		for(int i = 0 ; i<customers.size() ; i++){
-			addresses[i]=customers.get(i).getEmailAddress();
-		}
-		
-		Product p=null;
-		
-		try {
-			p = shop.getLastAddedProduct();
-		} catch (DomainException e) {}
-		
-		String subject="New product added to the shop.";
-		String body = "A new product was added to the shop:\n"
-					+ "------------------------------------\n"
-						+ "\tId: "+p.getId()+"\n"
-						+ "\tTitle: "+p.getTitle();
-		
-		if(addresses.length!=0){
+		if(customers!=null){
+			String[] addresses=new String[customers.size()];
+			
+			for(int i = 0 ; i<customers.size() ; i++){
+				addresses[i]=customers.get(i).getEmailAddress();
+			}
+			
+			Product p=null;
+			
 			try {
-				sendFromGMail(subject, body, addresses);
-			} catch (DomainException e) {
-				e.printStackTrace();
-			}			
+				p = shop.getLastAddedProduct();
+			} catch (DomainException e) {}
+			
+			String subject="New product added to the shop.";
+			String body = "A new product was added to the shop:\n"
+						+ "------------------------------------\n"
+							+ "\tId: "+p.getId()+"\n"
+							+ "\tTitle: "+p.getTitle();
+			
+			if(addresses.length!=0){
+				try {
+					sendFromGMail(subject, body, addresses);
+				} catch (DomainException e) {
+					e.printStackTrace();
+				}			
+			}
 		}
+		
 	}
 
 }

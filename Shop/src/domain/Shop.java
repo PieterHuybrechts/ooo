@@ -28,7 +28,7 @@ public class Shop implements Subject{
 			db.addProduct(p);
 			notifyObservers();
 		}catch(DbException e){
-			throw new DomainException(e);
+			throw new DomainException(e.getMessage());
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class Shop implements Subject{
 		try{			
 			db.deleteProduct(id);
 		}catch(DbException e){
-			throw new DomainException(e);
+			throw new DomainException(e.getMessage());
 		}
 	}
 	

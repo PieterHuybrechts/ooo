@@ -1,4 +1,4 @@
-package db;
+package db.concrete;
 
 import domain.Customer;
 import domain.Product;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import common.MagicStrings;
+import db.Database;
 import db.DbException;
 
 public class DerbyDb implements Database {
@@ -25,7 +26,7 @@ public class DerbyDb implements Database {
 	private static Statement stmt =null;
 	
 	public DerbyDb(String url) throws DbException{
-		String dbUrl = String.format("jdbc:derby:%s;create=true",url);
+		String dbUrl = String.format("jdbc:derby:%s;create=true",url+"\\derby");
 		conn = this.createConnection(dbUrl);
 		createTables();
 	}

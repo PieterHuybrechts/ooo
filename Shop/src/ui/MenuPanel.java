@@ -107,19 +107,20 @@ public class MenuPanel extends JPanel{
 
 		public void actionPerformed(ActionEvent e) {
 			String id = JOptionPane.showInputDialog("Enter the id:");
-			
-			Product p = null;
-			try {
-				p=shop.getProduct(Integer.parseInt(id));
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-			} catch (DomainException ex) {
-				JOptionPane.showMessageDialog(null,ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
-			}
-			
-			if(p!=null)
-			{
-				JOptionPane.showMessageDialog(null, p.getTitle());
+			if ((id != null) && (id.length() > 0)) {
+				Product p = null;
+				try {
+					p=shop.getProduct(Integer.parseInt(id));
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
+				} catch (DomainException ex) {
+					JOptionPane.showMessageDialog(null,ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+				}
+				
+				if(p!=null)
+				{
+					JOptionPane.showMessageDialog(null, p.getTitle());
+				}
 			}
 		}
 		
@@ -129,21 +130,21 @@ public class MenuPanel extends JPanel{
 
 		public void actionPerformed(ActionEvent e) {
 			String id = JOptionPane.showInputDialog("Enter the id:");
-			
-			Product p = null;
-			try {
-				p=shop.getProduct(Integer.parseInt(id));
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-			} catch (DomainException ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage() , "",JOptionPane.WARNING_MESSAGE);
-			}
-			
-			
-			if(p!=null){
-				String daysString = JOptionPane.showInputDialog("Enter the number of days:");
-				int days = Integer.parseInt(daysString);
-				JOptionPane.showMessageDialog(null, p.getPrice(days));
+			if ((id != null) && (id.length() > 0)) {
+				Product p = null;
+				try {
+					p=shop.getProduct(Integer.parseInt(id));
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
+				} catch (DomainException ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage() , "",JOptionPane.WARNING_MESSAGE);
+				}
+				
+				if(p!=null){
+					String daysString = JOptionPane.showInputDialog("Enter the number of days:");
+					int days = Integer.parseInt(daysString);
+					JOptionPane.showMessageDialog(null, p.getPrice(days));
+				}
 			}
 		}
 		
@@ -152,14 +153,16 @@ public class MenuPanel extends JPanel{
 
 		public void actionPerformed(ActionEvent e) {
 			String id = JOptionPane.showInputDialog("Enter the id:");
-			
-			try {
-				shop.rentProduct(Integer.parseInt(id));
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-			} catch (DomainException ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+			if ((id != null) && (id.length() > 0)) {
+				try {
+					shop.rentProduct(Integer.parseInt(id));
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
+				} catch (DomainException ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+				}
 			}
+			
 		}
 		
 	}
@@ -167,15 +170,20 @@ public class MenuPanel extends JPanel{
 
 		public void actionPerformed(ActionEvent e) {
 			String id = JOptionPane.showInputDialog("Enter the id:");
-			boolean damaged=JOptionPane.showConfirmDialog(null, "Is the item damaged?", "", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION;
 			
-			try {
-				shop.returnProduct(Integer.parseInt(id),damaged);
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-			} catch (DomainException ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+			if ((id != null) && (id.length() > 0)) {
+				boolean damaged=JOptionPane.showConfirmDialog(null, "Is the item damaged?", "", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION;
+				
+				try {
+					shop.returnProduct(Integer.parseInt(id),damaged);
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
+				} catch (DomainException ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+				}
 			}
+			
+			
 		}
 		
 	}
@@ -184,28 +192,31 @@ public class MenuPanel extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			String id = JOptionPane.showInputDialog("Enter the id:");
 			
-			try {
-				shop.repairProduct(Integer.parseInt(id));
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-			} catch (DomainException ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+			if ((id != null) && (id.length() > 0)) {
+				try {
+					shop.repairProduct(Integer.parseInt(id));
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
+				} catch (DomainException ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+				}
 			}
-			
 		}
 		
 	}
 	private class DeleteProductButtonListener implements ActionListener{
-
+		
 		public void actionPerformed(ActionEvent e) {
 			String id = JOptionPane.showInputDialog("Enter the id:");
 			
-			try {
-				shop.deleteProduct(Integer.parseInt(id));
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
-			} catch (DomainException ex) {
-				JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+			if ((id != null) && (id.length() > 0)) {
+				try {
+					shop.deleteProduct(Integer.parseInt(id));
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "ID input is van foute waarde.", "",JOptionPane.WARNING_MESSAGE);
+				} catch (DomainException ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage(), "",JOptionPane.WARNING_MESSAGE);
+				}
 			}
 		}
 		

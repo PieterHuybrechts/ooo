@@ -16,7 +16,7 @@ import common.PropertiesEnum;
 import db.Database;
 import db.DatabaseFactory;
 import db.DbException;
-import db.DerbyDb;
+import db.concrete.DerbyDb;
 import domain.Customer;
 import domain.DomainException;
 import domain.Game;

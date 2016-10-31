@@ -5,22 +5,21 @@ public enum MagicStrings {
 	
 	//Db errors
 	
-	PRODUCTEXISTINGINDB("There is already a product with this id in the db. Id="),
-	CUSTOMEREXISTINGINDB("There is already a customer with this id in the db. Id="),
-	PRODUCTNOTFOUNDINDB("There is no product with this id in the db. Id="),
-	CUSTOMERNOTFOUNDINDB("There is no customer with this id in the db. Id="),
+	PRODUCTEXISTINGINDB("A product with this id has already been added. Id="),
+	CUSTOMEREXISTINGINDB("A customer with this id has already been added. Id="),
+	PRODUCTNOTFOUNDINDB("Couldn't find a product with this id. Id="),
+	CUSTOMERNOTFOUNDINDB("Couldn't find a customer with this id. Id="),
 	PRODUCTNOTDELETABLEFROMDB("The product with this id couldn't be deleted. Id="),
 	CUSTOMERNOTDELETABLEFROMDB("The customer with this id couldn't be deleted. Id="),
 	DBCREATIONERROR("Something went wrong while creating the db"),
 	
 	//Domain Errors
 	
-	INVALLIDID("Enter a number higher than 0"),
-	INVALLIDNAMEENTERED("Enter a name"),
+	INVALLIDID("An id should be a number higher than 0."),
 	INVALLIDNAME("A name can't be null or empty."),
 	INVALLIDADDRESS("An address can't be null or empty"),
 	INVALLIDCITY("A city name can't be null or empty."),
-	INVALLIDZIPCODE("A zipcode has to be a number between 0 and"),
+	INVALLIDZIPCODE("A zipcode has to be a number between 0000 and 9999"),
 	INVALLIDEMAILADDRESS("An emailAddress can't be null or empty"),
 	NOTRENTABLE("This item can't be rented."),
 	NOTRETURNABLE("This item can't be returned."),

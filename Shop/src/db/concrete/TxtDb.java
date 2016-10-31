@@ -1,4 +1,4 @@
-package db;
+package db.concrete;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,38 +13,46 @@ import java.util.List;
 import java.util.Scanner;
 
 import common.MagicStrings;
+import db.Database;
+import db.DbException;
 import domain.Customer;
 import domain.Product;
 import domain.ProductStateEnum;
 
 public class TxtDb implements Database{
 
-	private File file;
+	private File productsFile;
+	private File customersFile;
 	private String delimiter;
 	
 	public TxtDb(String url) throws DbException {
-		setFile(new File(String.format("%s.txt", url)));
+		setFiles(url+"\\txt");
 		delimiter = ";";
 	}
 	
-	private void setFile(File file) throws DbException{
-		this.file = file;
+	private void setFiles(String url){
+		this.productsFile = new File(url+"\\products.txt");
+		this.customersFile = new File(url+"\\customers.txt");
 		
-		if(!this.getFile().exists()){
+		File dir = new File(url);
+		if(!dir.exists()){
+			dir.mkdir();
+		}
+		
+		createFile(productsFile);
+		createFile(customersFile);
+	}
+	
+	private void createFile(File file){
+		if(!file.exists()){
 			try {
-				File dir = new File(file.getParent());
-				if(!dir.exists()){
-					dir.mkdir();
-				}
-				this.getFile().createNewFile();
-			} catch (IOException e) {
-				throw new DbException(MagicStrings.DBCREATIONERROR.getError());
-			}
+				file.createNewFile();
+			} catch (IOException e){}		
 		}
 	}
 	
 	private File getFile(){
-		return this.file;
+		return this.productsFile;
 	}
 	
 	public void addProduct(Product p) throws DbException{

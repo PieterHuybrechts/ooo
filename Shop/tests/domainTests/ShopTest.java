@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import common.MagicStrings;
 import db.DbException;
-import db.DerbyDb;
+import db.concrete.DerbyDb;
 import domain.Shop;
 import domain.DomainException;
 import domain.Game;

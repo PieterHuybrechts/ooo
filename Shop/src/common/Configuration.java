@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Properties;
 
-import db.DerbyDb;
+import db.concrete.DerbyDb;
 
 public class Configuration {
 	

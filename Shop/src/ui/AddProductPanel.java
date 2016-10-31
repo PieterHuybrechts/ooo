@@ -1,5 +1,6 @@
 package ui;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,7 +17,6 @@ import domain.ProductTypeEnum;
 import domain.Shop;
 
 public class AddProductPanel extends JPanel{
-
 	/**
 	 * 
 	 */
@@ -35,7 +35,8 @@ public class AddProductPanel extends JPanel{
 	private JComboBox<ProductTypeEnum> typeComboBox = new JComboBox<ProductTypeEnum>(ProductTypeEnum.values());
 	private JComboBox<ProductStateEnum> stateComboBox = new JComboBox<ProductStateEnum>(ProductStateEnum.values());
 	
-	private JButton addButton = new JButton("Add");
+	private JButton addButton = new JButton("Ok");
+	private JButton cancelButton = new JButton("Cancel");
 	
 	public AddProductPanel(Shop shop, ShopFrame frame){
 		this.shop=shop;
@@ -55,28 +56,38 @@ public class AddProductPanel extends JPanel{
 		
 		addButton.addActionListener(new AddButtonListener());
 		add(addButton);
+		
+		cancelButton.addActionListener(new CancelButtonListener());
+		add(cancelButton);
 	}
 	
 	private class AddButtonListener implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
 			String title = titleField.getText();
-			int id = Integer.parseInt(idField.getText());
-			String className = ProductTypeEnum.valueOf(typeComboBox.getSelectedItem().toString()).getClassName();
-			ProductStateEnum state = ProductStateEnum.valueOf(stateComboBox.getSelectedItem().toString());
-			
-			try {
+			try{
+				int id;
+				id = Integer.parseInt(idField.getText());
+				
+				String className = ProductTypeEnum.valueOf(typeComboBox.getSelectedItem().toString()).getClassName();
+				ProductStateEnum state = ProductStateEnum.valueOf(stateComboBox.getSelectedItem().toString());
 				shop.addProduct(className, id, title, state);
-			} catch (DomainException e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage(),"",JOptionPane.ERROR_MESSAGE);
+			}catch(NumberFormatException e2){
+				JOptionPane.showMessageDialog(null, "Wrong number format: \""+idField.getText()+"\"","",JOptionPane.ERROR_MESSAGE);
+			}catch(DomainException e2){
+				JOptionPane.showMessageDialog(null, e2.getMessage(),"",JOptionPane.ERROR_MESSAGE);
 			}
 			
 			frame.setContentPane(new MenuPanel(shop,frame));
 			frame.start();
 		}
+	}
 		
-		
-		
-		
+	private class CancelButtonListener implements ActionListener{
+
+		public void actionPerformed(ActionEvent e) {				
+			frame.setContentPane(new MenuPanel(shop,frame));
+			frame.start();
+		}
 	}
 }
