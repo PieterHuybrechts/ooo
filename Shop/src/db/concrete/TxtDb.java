@@ -205,4 +205,10 @@ public class TxtDb implements Database{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public List<Product> getAllProducts() throws DbException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

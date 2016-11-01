@@ -1,6 +1,7 @@
 package db.concrete;
 
 import domain.Customer;
+import domain.DomainException;
 import domain.Product;
 import domain.ProductFactory;
 import domain.ProductStateEnum;
@@ -99,6 +100,33 @@ public class DerbyDb implements Database {
 		}
 	}
 
+	@Override
+	public List<Product> getAllProducts() throws DbException {
+		List<Product> products = new ArrayList<Product>();
+		
+		try{
+			stmt = conn.createStatement();
+			
+			ResultSet set = stmt.executeQuery("SELECT * FROM "+productsTableName);
+			while(set.next()){
+				int i = Integer.parseInt(set.getString("id"));
+				String title = set.getString("title");
+				String className = set.getString("class");
+				ProductStateEnum state = ProductStateEnum.valueOf(set.getString("state"));
+				products.add(ProductFactory.createProduct(className, i, title, state));
+			}
+			stmt.close();
+		}catch(SQLException | DomainException e){
+			try {
+				stmt.close();
+			} catch (SQLException e1) {}
+			
+			throw new DbException(e.getMessage());
+		}
+		
+		return products;
+	}
+	
 	public void deleteProduct(int id) throws DbException {
 		try{
 			stmt = conn.createStatement();
@@ -275,9 +303,4 @@ public class DerbyDb implements Database {
 	}
 
 
-
-
-	
-	
-	
 }
