@@ -1,8 +1,8 @@
 package app;
 import common.Configuration;
+import common.Observer;
 import db.DbException;
 import domain.EMailService;
-import domain.Observer;
 import domain.Shop;
 import ui.MenuPanel;
 import ui.ShopFrame;

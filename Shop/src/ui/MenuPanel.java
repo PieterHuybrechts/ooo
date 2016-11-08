@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import domain.DomainException;
-import domain.Product;
 import domain.Shop;
+import domain.products.Product;
 
 public class MenuPanel extends JPanel{
 	

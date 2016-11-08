@@ -1,4 +1,4 @@
-package domain;
+package domain.products.producstates;
 
 public enum ProductStateEnum {
 

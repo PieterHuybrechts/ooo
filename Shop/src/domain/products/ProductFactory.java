@@ -1,8 +1,10 @@
-package domain;
+package domain.products;
 
 import java.lang.reflect.Constructor;
 
 import common.MagicStrings;
+import domain.DomainException;
+import domain.products.producstates.ProductStateEnum;
 
 public class ProductFactory {
 	

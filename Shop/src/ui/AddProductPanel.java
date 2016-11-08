@@ -12,9 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import domain.DomainException;
-import domain.ProductStateEnum;
-import domain.ProductTypeEnum;
 import domain.Shop;
+import domain.products.ProductTypeEnum;
+import domain.products.producstates.ProductStateEnum;
 
 public class AddProductPanel extends JPanel{
 	/**

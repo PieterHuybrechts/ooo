@@ -13,11 +13,11 @@ import common.MagicStrings;
 import db.DbException;
 import db.concrete.DerbyDb;
 import domain.Shop;
+import domain.products.Game;
+import domain.products.Movie;
+import domain.products.Product;
+import domain.products.producstates.ProductStateEnum;
 import domain.DomainException;
-import domain.Game;
-import domain.Movie;
-import domain.Product;
-import domain.ProductStateEnum;
 
 public class ShopTest {
 	

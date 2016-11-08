@@ -1,6 +1,8 @@
-package domain;
+package domain.products.producstates;
 
 import common.MagicStrings;
+import domain.DomainException;
+import domain.products.Product;
 
 public class ProductState{
 

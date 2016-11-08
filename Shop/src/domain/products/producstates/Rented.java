@@ -1,4 +1,6 @@
-package domain;
+package domain.products.producstates;
+
+import domain.products.Product;
 
 public class Rented extends ProductState {
 	

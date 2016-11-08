@@ -2,9 +2,9 @@ package db.concrete;
 
 import domain.Customer;
 import domain.DomainException;
-import domain.Product;
-import domain.ProductFactory;
-import domain.ProductStateEnum;
+import domain.products.Product;
+import domain.products.ProductFactory;
+import domain.products.producstates.ProductStateEnum;
 
 import java.lang.reflect.Constructor;
 import java.sql.Connection;

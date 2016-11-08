@@ -15,10 +15,10 @@ import db.DatabaseFactory;
 import db.DbException;
 import db.concrete.TxtDb;
 import domain.DomainException;
-import domain.Game;
-import domain.Movie;
-import domain.Product;
-import domain.ProductStateEnum;
+import domain.products.Game;
+import domain.products.Movie;
+import domain.products.Product;
+import domain.products.producstates.ProductStateEnum;
 
 public class TxtDbTest {
 	

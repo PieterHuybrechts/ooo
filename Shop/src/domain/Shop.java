@@ -3,10 +3,15 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.Observer;
 import common.PropertiesEnum;
+import common.Subject;
 import db.Database;
 import db.DatabaseFactory;
 import db.DbException;
+import domain.products.Product;
+import domain.products.ProductFactory;
+import domain.products.producstates.ProductStateEnum;
 
 public class Shop implements Subject{
 	

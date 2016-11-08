@@ -16,8 +16,8 @@ import common.MagicStrings;
 import db.Database;
 import db.DbException;
 import domain.Customer;
-import domain.Product;
-import domain.ProductStateEnum;
+import domain.products.Product;
+import domain.products.producstates.ProductStateEnum;
 
 public class TxtDb implements Database{
 

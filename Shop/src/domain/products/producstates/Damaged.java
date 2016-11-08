@@ -1,4 +1,7 @@
-package domain;
+package domain.products.producstates;
+
+import domain.DomainException;
+import domain.products.Product;
 
 public class Damaged extends ProductState {
 

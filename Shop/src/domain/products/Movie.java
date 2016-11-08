@@ -1,4 +1,7 @@
-package domain;
+package domain.products;
+
+import domain.DomainException;
+import domain.products.producstates.ProductStateEnum;
 
 public class Movie extends Product{
 	

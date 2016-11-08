@@ -9,10 +9,10 @@ import org.junit.Test;
 import common.MagicStrings;
 import domain.Customer;
 import domain.DomainException;
-import domain.Game;
-import domain.Product;
-import domain.ProductFactory;
-import domain.ProductStateEnum;
+import domain.products.Game;
+import domain.products.Product;
+import domain.products.ProductFactory;
+import domain.products.producstates.ProductStateEnum;
 
 public class FactoryTest {
 	

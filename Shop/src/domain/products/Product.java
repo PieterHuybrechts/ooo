@@ -1,6 +1,8 @@
-package domain;
+package domain.products;
 
 import common.MagicStrings;
+import domain.DomainException;
+import domain.products.producstates.ProductStateEnum;
 
 public abstract class Product {
 	private int id;
@@ -39,7 +41,7 @@ public abstract class Product {
 		return title;
 	}
 
-	protected void setCurrentState(ProductStateEnum state){
+	public void setCurrentState(ProductStateEnum state){
 		this.currentState = state;
 	}
 	

@@ -9,6 +9,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import common.Observer;
+import domain.products.Product;
+
 public class EMailService implements Observer {
 
 	private Shop shop;
