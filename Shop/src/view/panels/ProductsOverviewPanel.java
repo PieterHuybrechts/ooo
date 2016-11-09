@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 
 import controller.ShopController;
 
-public class ProductsPanel extends JPanel{
+public class ProductsOverviewPanel extends JPanel{
 
 	/**
 	 * 
@@ -15,7 +15,7 @@ public class ProductsPanel extends JPanel{
 	
 	private ShopController shopController;
 	
-	public ProductsPanel(ShopController shopController){
+	public ProductsOverviewPanel(ShopController shopController){
 		super();
 		this.shopController = shopController;
 		setBackground(new Color(0, 255, 0));

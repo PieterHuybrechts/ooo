@@ -5,11 +5,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.ShopController;
-import view.panels.CustomersPanel;
-import view.panels.ProductsPanel;
+import domain.DomainException;
+import view.panels.CustomersOverviewPanel;
+import view.panels.ProductsOverviewPanel;
 
 /**
  * 
@@ -60,11 +62,15 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 		
 		switch (eventEnum) {
 		case PRODUCTSBUTTONLISTENER:
-			fireChanged(new ProductsPanel(this.shopController));
+			fireChanged(new ProductsOverviewPanel(this.shopController));
 			break;
 		
 		case CUSTOMERSBUTTONLISTENER:
-			fireChanged(new CustomersPanel(this.shopController));
+			try {
+				fireChanged(new CustomersOverviewPanel(this.shopController));
+			} catch (DomainException e) {
+				JOptionPane.showMessageDialog(null, "Couldn't open the customers window.","",JOptionPane.WARNING_MESSAGE);
+			}
 			break;
 		case QUITBUTTONLISTENER:
 			System.exit(1);
