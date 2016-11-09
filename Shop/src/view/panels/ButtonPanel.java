@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
+import controller.ShopController;
 import controller.event.EventEnum;
 import controller.event.MainWindowChangedFiringSource;
 import view.custom.Button;
@@ -13,14 +14,14 @@ import view.custom.Button;
 public class ButtonPanel extends JPanel{
 	private static final long serialVersionUID = -6358979366202454017L;
 	
-	Button blueButton;
-	Button redButton;
-	Button greenButton;
 	
-	public ButtonPanel(){
+	private Button blueButton;
+	private Button redButton;
+	private Button greenButton;
+	
+	public ButtonPanel(MainWindowChangedFiringSource listener){
 		super();
 		
-		MainWindowChangedFiringSource listener = MainWindowChangedFiringSource.getInstance();
 		
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] { 50,100,50 };

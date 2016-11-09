@@ -8,6 +8,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controller.ShopController;
+import controller.event.MainWindowChangedFiringSource;
 import controller.event.WindowChangedService;
 import view.panels.ButtonPanel;
 
@@ -19,8 +21,11 @@ public class MainWindow extends JFrame implements WindowChangedService{
 	
 	private ButtonPanel buttonPanel;
 	private JPanel contentPanel;
+	private JPanel viewPanel;
 	
-	public MainWindow(){
+	public MainWindow(MainWindowChangedFiringSource listener){
+		
+		
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] { 200, 600 };
 		gbl.rowHeights = new int[] { 0 };
@@ -29,7 +34,7 @@ public class MainWindow extends JFrame implements WindowChangedService{
 		
 		contentPanel = new JPanel();
 		contentPanel.setLayout(gbl);
-		buttonPanel = new ButtonPanel();
+		buttonPanel = new ButtonPanel(listener);
 		this.setButtonPanel(buttonPanel);
 		
 		this.setContentPane(contentPanel);
@@ -41,6 +46,7 @@ public class MainWindow extends JFrame implements WindowChangedService{
 	}
 	
 	private void setViewPanel(JPanel panel) {
+		this.viewPanel=panel;
 		GridBagConstraints gbc_viewPanel = new GridBagConstraints();
 		gbc_viewPanel.gridy = 0;
 		gbc_viewPanel.gridx = 1;
@@ -62,6 +68,10 @@ public class MainWindow extends JFrame implements WindowChangedService{
 	public void changeViewPanel(JPanel panel) {
 		//contentPanel.removeAll();
 		//setButtonPanel(buttonPanel);
+		if(viewPanel!=null){
+			contentPanel.remove(viewPanel);
+		}
+		
 		setViewPanel(panel);
 		setVisible(true);
 	}

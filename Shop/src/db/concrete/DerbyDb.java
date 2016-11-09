@@ -6,7 +6,6 @@ import domain.products.Product;
 import domain.products.ProductFactory;
 import domain.products.producstates.ProductStateEnum;
 
-import java.lang.reflect.Constructor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -60,9 +59,6 @@ public class DerbyDb implements Database {
 				stmt.close();
 			} catch (SQLException e1) {}
 		}
-		
-		
-		
 	}	
 	
 	public void addProduct(Product p) throws DbException{
@@ -79,6 +75,8 @@ public class DerbyDb implements Database {
 	}
 
 	public Product getProduct(int id) throws DbException{
+		Product p = null;
+		
 		try{
 			stmt = conn.createStatement();
 			ResultSet set = stmt.executeQuery("SELECT * FROM " + productsTableName + " WHERE id="+id);
@@ -90,14 +88,17 @@ public class DerbyDb implements Database {
 			ProductStateEnum state = ProductStateEnum.valueOf(set.getString("state"));
 			stmt.close();
 			
-			return ProductFactory.createProduct(className, i, title, state);
+			p= ProductFactory.createProduct(className, i, title, state);
 			
-		}catch(Exception e){
-			try{
+		}catch(SQLException e){
+			try {
 				stmt.close();
-			}catch (Exception e1) {}
-			throw new DbException(MagicStrings.PRODUCTNOTFOUNDINDB.getError()+id);
+			} catch (SQLException e1) {}
+			throw new DbException(e.getMessage());
+		}catch (DomainException e) {
+			p=null;
 		}
+		return p;
 	}
 
 	@Override
@@ -271,7 +272,7 @@ public class DerbyDb implements Database {
 				stmt.close();
 			} catch (SQLException e1) {}
 			
-			throw new DbException("Couldn't get all customers.");
+			throw new DbException("Couldn't get all subscribed customers.");
 		}
 		
 		return customers;
@@ -283,22 +284,22 @@ public class DerbyDb implements Database {
 			stmt = conn.createStatement();
 			ResultSet set = stmt.executeQuery("SELECT * FROM " + productsTableName + " WHERE time_stamp IN (SELECT max(time_stamp) FROM "+productsTableName+")");
 			set.next();
-			int i = Integer.parseInt(set.getString("id"));
-			String name = set.getString("title");
-			String classStr = set.getString("class");
-			String stateStr = set.getString("state");
+			int id = Integer.parseInt(set.getString("id"));
+			String title = set.getString("title");
+			String className = set.getString("class");
+			ProductStateEnum state = ProductStateEnum.valueOf(set.getString("state"));
 			stmt.close();
 			
-			Class<?> clazz = Class.forName(classStr);
-			Constructor<?> ctor = clazz.getConstructor(int.class,String.class,ProductStateEnum.class);
-			p = (Product)ctor.newInstance((i),name,ProductStateEnum.valueOf(stateStr));	
-			stmt.close();
-		}catch(Exception e){
+			p=ProductFactory.createProduct(className, id, title, state);
+		}catch(SQLException e){
 			try {
 				stmt.close();
 			} catch (SQLException e1) {}
-			throw new DbException("Couldn't find the last added product");
+			throw new DbException(e.getMessage());
+		}catch(DomainException e){
+			p=null;
 		}
+		
 		return p;
 	}
 

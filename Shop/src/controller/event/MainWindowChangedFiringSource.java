@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import controller.ShopController;
 import view.panels.CustomersPanel;
 import view.panels.ProductsPanel;
 
@@ -22,17 +23,11 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 	
 	
 	private List<WindowChangedService> listeners;
-	private static MainWindowChangedFiringSource instance;
+	private ShopController shopController;
 	
-	private MainWindowChangedFiringSource() {
+	public MainWindowChangedFiringSource(ShopController shopController) {
 		listeners = new ArrayList<WindowChangedService>();
-	}
-	
-	public static MainWindowChangedFiringSource getInstance(){
-	 if(instance==null){
-		 instance = new MainWindowChangedFiringSource();
-	 }
-	 return instance;
+		this.shopController = shopController;
 	}
 	
 	@Override
@@ -65,11 +60,11 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 		
 		switch (eventEnum) {
 		case PRODUCTSBUTTONLISTENER:
-			fireChanged(new ProductsPanel());
+			fireChanged(new ProductsPanel(this.shopController));
 			break;
 		
 		case CUSTOMERSBUTTONLISTENER:
-			fireChanged(new CustomersPanel());
+			fireChanged(new CustomersPanel(this.shopController));
 			break;
 		case QUITBUTTONLISTENER:
 			System.exit(1);
