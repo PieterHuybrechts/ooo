@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import controller.ShopController;
 import domain.DomainException;
+import view.panels.CustomerAddPanel;
 import view.panels.CustomersOverviewPanel;
 import view.panels.ProductsOverviewPanel;
 
@@ -59,24 +60,30 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 				break;
 			}
 		}
-		
-		switch (eventEnum) {
-		case PRODUCTSBUTTONLISTENER:
-			fireChanged(new ProductsOverviewPanel(this.shopController));
-			break;
-		
-		case CUSTOMERSBUTTONLISTENER:
-			try {
-				fireChanged(new CustomersOverviewPanel(this.shopController));
-			} catch (DomainException e) {
-				JOptionPane.showMessageDialog(null, "Couldn't open the customers window.","",JOptionPane.WARNING_MESSAGE);
+		if(eventEnum!=null){
+			switch (eventEnum) {
+			case PRODUCTSBUTTONEVENT:
+				fireChanged(new ProductsOverviewPanel(this.shopController,this));
+				break;
+			case CANCELADDCUSTOMERBUTTONEVENT:
+			case OKADDCUSTOMERBUTTONEVENT:
+			case CUSTOMERSBUTTONEVENT:
+				try {
+					fireChanged(new CustomersOverviewPanel(this.shopController,this));
+				} catch (DomainException e) {
+					JOptionPane.showMessageDialog(null, "Couldn't open the customers window.","",JOptionPane.WARNING_MESSAGE);
+				}
+				break;
+			case QUITBUTTONEVENT:
+				System.exit(1);
+				break;
+			case ADDCUSTOMERBUTTONEVENT:
+				fireChanged(new CustomerAddPanel(this.shopController,this));
+				break;
+			default:
+				break;
 			}
-			break;
-		case QUITBUTTONLISTENER:
-			System.exit(1);
-			break;
-		default:
-			break;
 		}
+		
 	}
 }

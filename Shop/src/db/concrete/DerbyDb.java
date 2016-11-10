@@ -223,7 +223,7 @@ public class DerbyDb implements Database {
 		
 		try{
 			stmt = conn.createStatement();
-			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName+ " WHERE subscribed='true'");
+			ResultSet set = stmt.executeQuery("SELECT * FROM "+customersTableName);
 			while(set.next()){
 				int i = Integer.parseInt(set.getString("id"));
 				String firstName = set.getString("first_name");

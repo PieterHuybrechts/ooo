@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 import controller.ShopController;
+import controller.event.MainWindowChangedFiringSource;
 
 public class ProductsOverviewPanel extends JPanel{
 
@@ -15,7 +16,7 @@ public class ProductsOverviewPanel extends JPanel{
 	
 	private ShopController shopController;
 	
-	public ProductsOverviewPanel(ShopController shopController){
+	public ProductsOverviewPanel(ShopController shopController,MainWindowChangedFiringSource listener){
 		super();
 		this.shopController = shopController;
 		setBackground(new Color(0, 255, 0));

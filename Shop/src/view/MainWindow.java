@@ -24,8 +24,6 @@ public class MainWindow extends JFrame implements WindowChangedService{
 	private JPanel viewPanel;
 	
 	public MainWindow(MainWindowChangedFiringSource listener){
-		
-		
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] { 200, 600 };
 		gbl.rowHeights = new int[] { 0 };

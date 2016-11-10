@@ -44,6 +44,17 @@ public class ShopController {
 		shop.addCustomer(id, firstName, lastName, address, zipCode, city, eMailAddress, subscribed);
 	}
 	
+	public void addCustomer(String id, String firstName, String lastName, String address, String zipCode, String city, String eMailAddress, boolean subscribed) throws DomainException{
+		int i;
+		try{
+			i=Integer.parseInt(id);
+		}catch (NumberFormatException e) {
+			throw new DomainException("Id is not a number.");
+		}
+		
+		shop.addCustomer(i, firstName, lastName, address, zipCode, city, eMailAddress, subscribed);
+	}
+	
 	public Customer getCustomer(int id) throws DomainException{
 		return shop.getCustomer(id);
 	}

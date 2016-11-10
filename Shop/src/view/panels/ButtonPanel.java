@@ -40,7 +40,7 @@ public class ButtonPanel extends JPanel{
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		blueButton = new Button("Products");
 		blueButton.addActionListener(listener);
-		blueButton.setActionCommand(EventEnum.PRODUCTSBUTTONLISTENER);
+		blueButton.setActionCommand(EventEnum.PRODUCTSBUTTONEVENT);
 		add(blueButton,gbc);
 		
 		gbc = new GridBagConstraints();
@@ -49,7 +49,7 @@ public class ButtonPanel extends JPanel{
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		redButton = new Button("Customers");
 		redButton.addActionListener(listener);
-		redButton.setActionCommand(EventEnum.CUSTOMERSBUTTONLISTENER);
+		redButton.setActionCommand(EventEnum.CUSTOMERSBUTTONEVENT);
 		add(redButton,gbc);
 		
 		gbc = new GridBagConstraints();
@@ -58,7 +58,7 @@ public class ButtonPanel extends JPanel{
 		gbc.fill=GridBagConstraints.HORIZONTAL;
 		greenButton = new Button("Quit");
 		greenButton.addActionListener(listener);
-		greenButton.setActionCommand(EventEnum.QUITBUTTONLISTENER);
+		greenButton.setActionCommand(EventEnum.QUITBUTTONEVENT);
 		add(greenButton,gbc);
 	}
 }

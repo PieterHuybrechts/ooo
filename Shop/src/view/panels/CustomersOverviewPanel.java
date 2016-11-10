@@ -2,24 +2,22 @@ package view.panels;
 
 import java.awt.Dimension;
 
-import javax.swing.JComboBox;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import controller.ShopController;
+import controller.event.EventEnum;
+import controller.event.MainWindowChangedFiringSource;
+import view.custom.Button;
 import view.tableModels.CustomersTableModel;
-import javax.swing.DefaultComboBoxModel;
 
 import domain.DomainException;
-import domain.products.ProductTypeEnum;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.JScrollPane;
+import java.awt.Font;
 
 public class CustomersOverviewPanel extends JPanel{
 
@@ -31,47 +29,40 @@ public class CustomersOverviewPanel extends JPanel{
 	private CustomersTableModel customersTblMdl;
 	private JTable customersTbl;
 	
-	public CustomersOverviewPanel(ShopController shopController) throws DomainException{
+	public CustomersOverviewPanel(ShopController shopController,MainWindowChangedFiringSource listener) throws DomainException{
 		super();
 		
 		Dimension dimension = new Dimension(600,600);
 		this.setSize(dimension);
 		setLayout(null);		
 		
+		JLabel titleLbl = new JLabel("Customers");
+		titleLbl.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		titleLbl.setBounds(10, 11, 580, 31);
+		add(titleLbl);
+		
 		JLabel searcLbl = new JLabel("Search:");
-		searcLbl.setBounds(10, 11, 46, 14);
+		searcLbl.setBounds(10, 52, 58, 14);
 		add(searcLbl);
 		
 		searchTF = new JTextField();
-		searchTF.setBounds(66, 8, 86, 20);
+		searchTF.setBounds(88, 49, 104, 20);
 		add(searchTF);
 		searchTF.setColumns(10);
 		
-		
-		
-		JButton okBtn = new JButton("Ok");
-		okBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		okBtn.setBounds(501, 566, 89, 23);
-		add(okBtn);		
-		
-		JButton baclBtn = new JButton("Back");
-		baclBtn.setBounds(402, 566, 89, 23);
-		add(baclBtn);
-		
-		JButton addBtn = new JButton("Add");
-		addBtn.setBounds(10, 566, 89, 23);
-		add(addBtn);
-		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 36, 580, 519);
+		scrollPane.setBounds(10, 78, 580, 477);
 		add(scrollPane);
 		
 		customersTblMdl = new CustomersTableModel(shopController);
 		customersTbl = new JTable(customersTblMdl);
 		scrollPane.setViewportView(customersTbl);
+		
+		Button addBtn = new Button("Add");
+		addBtn.addActionListener(listener);
+		addBtn.setActionCommand(EventEnum.ADDCUSTOMERBUTTONEVENT);
+		addBtn.setBounds(501, 566, 89, 23);
+		add(addBtn);
 		
 		customersTblMdl.updateTable();
 	}
