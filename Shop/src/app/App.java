@@ -1,11 +1,12 @@
 package app;
 import common.Configuration;
 import common.Observer;
+import controller.ShopController;
+import controller.event.MainWindowChangedFiringSource;
 import db.DbException;
 import domain.EMailService;
 import domain.Shop;
-import ui.MenuPanel;
-import ui.ShopFrame;
+import view.MainWindow;
 
 public class App {
 
@@ -16,9 +17,12 @@ public class App {
 		Observer eMailService = new EMailService(shop);
 		shop.addObserver(eMailService);
 		
-		ShopFrame frame = new ShopFrame();
-		frame.setContentPane(new MenuPanel(shop,frame));
-		frame.start();
+		ShopController shopController = new ShopController(shop);
+		
+		MainWindowChangedFiringSource listener = new MainWindowChangedFiringSource(shopController);
+		
+		MainWindow w = new MainWindow(listener);
+		listener.addListener(w);
 	}
 	
 }

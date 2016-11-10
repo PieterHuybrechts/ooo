@@ -133,7 +133,6 @@ public class Shop implements Subject{
 		try {
 			db.deleteCustomer(id);
 		} catch (DbException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -169,6 +168,14 @@ public class Shop implements Subject{
 		for(Observer o : observers){
 			o.update();
 		}		
+	}
+
+	public List<Product> getAllProducts() throws DomainException {
+		try {
+			return db.getAllProducts();
+		} catch (DbException e) {
+			throw new DomainException(e.getMessage());
+		}
 	}
 
 
