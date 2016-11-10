@@ -11,7 +11,6 @@ import controller.ShopController;
 import controller.event.EventEnum;
 import controller.event.MainWindowChangedFiringSource;
 import domain.DomainException;
-import view.MainWindow;
 import view.custom.Button;
 
 import javax.swing.JCheckBox;
@@ -35,13 +34,8 @@ public class CustomerAddPanel extends JPanel{
 	private JCheckBox subscribeCB;
 	
 	private Button okBtn;
-	
-	private ShopController controller;
-	private MainWindowChangedFiringSource buttonListener;
 
 	public CustomerAddPanel(final ShopController shopController, MainWindowChangedFiringSource listener){
-		this.controller = shopController;
-		this.buttonListener = listener;
 		
 		Dimension dimension = new Dimension(600,600);
 		this.setSize(dimension);

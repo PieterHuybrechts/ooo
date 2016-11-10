@@ -15,7 +15,6 @@ import view.custom.Button;
 import view.tableModels.CustomersTableModel;
 
 import domain.DomainException;
-import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.awt.Font;
 

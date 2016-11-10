@@ -8,7 +8,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controller.ShopController;
 import controller.event.MainWindowChangedFiringSource;
 import controller.event.WindowChangedService;
 import view.panels.ButtonPanel;

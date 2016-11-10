@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
-import controller.ShopController;
 import controller.event.EventEnum;
 import controller.event.MainWindowChangedFiringSource;
 import view.custom.Button;
