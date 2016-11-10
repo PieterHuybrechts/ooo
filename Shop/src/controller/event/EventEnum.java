@@ -1,15 +1,18 @@
 package controller.event;
 
 public enum EventEnum {
-
-	PRODUCTSBUTTONEVENT("productsButtonEvent"),
-	CUSTOMERSBUTTONEVENT("customerButtonEvent"),
-	QUITBUTTONEVENT("quitButtonEvent"),
 	
+	CUSTOMERSBUTTONEVENT("customerButtonEvent"),
 	ADDCUSTOMERBUTTONEVENT("addCustomerButtonEvent"),
 	CANCELADDCUSTOMERBUTTONEVENT("cancelAddCustomerButtonEvent"),
 	OKADDCUSTOMERBUTTONEVENT("okAddCustomerButtonEvent"),
+
+	PRODUCTSBUTTONEVENT("productsButtonEvent"),
+	ADDPRODUCTBUTTONEVENT("addProductButtonEvent"),
+	CANCELADDPRODUCTBUTTONEVENT("cancelAddProductButtonEvent"),
+	OKADDPRODUCTBUTTONEVENT("okAddProductButtonEvent"),
 	
+	QUITBUTTONEVENT("quitButtonEvent"),
 	NOACTION("noAction");
 	
 	private String actionCommand;

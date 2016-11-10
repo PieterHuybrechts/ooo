@@ -12,19 +12,10 @@ import controller.ShopController;
 import domain.DomainException;
 import view.panels.CustomerAddPanel;
 import view.panels.CustomersOverviewPanel;
+import view.panels.ProductAddPanel;
 import view.panels.ProductsOverviewPanel;
 
-/**
- * 
- * @author Huybrechts
- *
- */
-
-
 public class MainWindowChangedFiringSource implements WindowChangedFiringService,ActionListener{
-
-	
-	
 	private List<WindowChangedService> listeners;
 	private ShopController shopController;
 	
@@ -62,8 +53,17 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 		}
 		if(eventEnum!=null){
 			switch (eventEnum) {
+			case OKADDPRODUCTBUTTONEVENT:
+			case CANCELADDPRODUCTBUTTONEVENT:
 			case PRODUCTSBUTTONEVENT:
-				fireChanged(new ProductsOverviewPanel(this.shopController,this));
+				try{
+					fireChanged(new ProductsOverviewPanel(this.shopController,this));					
+				}catch (DomainException e) {
+					JOptionPane.showMessageDialog(null, "Couldn't open the products window.","",JOptionPane.WARNING_MESSAGE);
+				}
+				break;
+			case ADDPRODUCTBUTTONEVENT:
+				fireChanged(new ProductAddPanel(this.shopController,this));
 				break;
 			case CANCELADDCUSTOMERBUTTONEVENT:
 			case OKADDCUSTOMERBUTTONEVENT:
@@ -74,11 +74,11 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 					JOptionPane.showMessageDialog(null, "Couldn't open the customers window.","",JOptionPane.WARNING_MESSAGE);
 				}
 				break;
-			case QUITBUTTONEVENT:
-				System.exit(1);
-				break;
 			case ADDCUSTOMERBUTTONEVENT:
 				fireChanged(new CustomerAddPanel(this.shopController,this));
+				break;
+			case QUITBUTTONEVENT:
+				System.exit(1);
 				break;
 			default:
 				break;

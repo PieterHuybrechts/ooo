@@ -30,6 +30,17 @@ public class ShopController {
 		shop.addProduct(className, id, title, state);;
 	}
 	
+	public void addProduct(String className,String id,String title,ProductStateEnum state) throws DomainException{
+		int i;
+		try{
+			i = (Integer.parseInt(id));			
+		}catch(NumberFormatException e){
+			throw new DomainException("Id is not a number.");
+		}
+		
+		this.addProduct(className, i, title, state);
+	}
+	
 	public Product geProduct(int id) throws DomainException{
 		return shop.getProduct(id);
 	}

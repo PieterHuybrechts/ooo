@@ -121,8 +121,6 @@ public class CustomerAddPanel extends JPanel{
 		okBtn.setActionCommand(EventEnum.OKADDCUSTOMERBUTTONEVENT);
 		OkBtnListener okBtnListener= new OkBtnListener(shopController,listener);
 		okBtn.addActionListener(okBtnListener);
-		
-		
 		okBtn.setBounds(501, 566, 89, 23);
 		add(okBtn);
 		
