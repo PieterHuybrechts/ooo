@@ -18,8 +18,9 @@ public class ButtonPanel extends JPanel{
 	private Button redButton;
 	private Button greenButton;
 	
-	public ButtonPanel(MainWindowChangedFiringSource listener){
+	public ButtonPanel(){
 		super();
+		MainWindowChangedFiringSource listener = MainWindowChangedFiringSource.getInstance();
 		
 		
 		GridBagLayout gbl = new GridBagLayout();

@@ -42,7 +42,7 @@ public class DerbyDb implements Database {
 	private void createTables(){
 		try{
 			stmt = conn.createStatement();
-			stmt.execute("CREATE TABLE "+productsTableName+" (id INTEGER PRIMARY KEY, title VARCHAR(20) NOT NULL, class VARCHAR(20) NOT NULL, state VARCHAR(20) NOT NULL, time_stamp TIMESTAMP NOT NULL)");
+			stmt.execute("CREATE TABLE "+productsTableName+" (id INTEGER PRIMARY KEY, title VARCHAR(20) NOT NULL, class VARCHAR(40) NOT NULL, state VARCHAR(20) NOT NULL, time_stamp TIMESTAMP NOT NULL)");
 			stmt.close();			
 		}catch(SQLException e){
 			try {
@@ -145,9 +145,12 @@ public class DerbyDb implements Database {
 	public void updateProduct(Product p) throws DbException {
 		try {
 			stmt = conn.createStatement();
-			stmt.execute("UPDATE " + productsTableName + 
+			String qry = "UPDATE " + productsTableName + 
 				    " SET state='"+p.getCurrentState()+
-				    "' WHERE id=" +p.getId() );
+				    "',class='"+p.getClass().getName()+
+				    "',title='"+p.getTitle()+
+				    "' WHERE id=" +p.getId() ;
+			stmt.execute(qry);
 			stmt.close();
 		} catch (SQLException e) {
 			try {

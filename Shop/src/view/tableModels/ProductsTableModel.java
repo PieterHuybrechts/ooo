@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import controller.ShopController;
 import domain.DomainException;
 import domain.products.Product;
+import domain.products.ProductTypeEnum;
 import domain.products.producstates.ProductStateEnum;
 
 public class ProductsTableModel extends AbstractTableModel{
@@ -16,7 +17,7 @@ public class ProductsTableModel extends AbstractTableModel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private static final String[] columnsNames = {"id","Title","Current State"};
+	private static final String[] columnsNames = {"id","Title","type","Current State"};
 	private final List<Product> products;
 	private ShopController shopController;
 	
@@ -29,6 +30,10 @@ public class ProductsTableModel extends AbstractTableModel{
 		this.products.clear();
 		this.products.addAll(shopController.getAllProducts());
 		fireTableRowsInserted(this.products.size()-1, this.products.size()-1);
+	}
+	
+	public Product getProductAtRow(int row){
+		return products.get(row);
 	}
 	
 	@Override
@@ -56,6 +61,18 @@ public class ProductsTableModel extends AbstractTableModel{
 		case 1:
 			return p.getTitle();
 		case 2:
+			ProductTypeEnum type=null;
+			
+			for(ProductTypeEnum t : ProductTypeEnum.values()){
+				if(t.getClassName().equals(p.getClass().getName())){
+					type = t;
+					break;
+				}
+			}
+			
+			return type;
+			
+		case 3:
 			return p.getCurrentState();
 		default:
 			return null;
@@ -70,6 +87,8 @@ public class ProductsTableModel extends AbstractTableModel{
 		case 1:
 			return String.class;
 		case 2:
+			return ProductTypeEnum.class;
+		case 3:
 			return ProductStateEnum.class;
 		default:
 			return null;

@@ -33,7 +33,10 @@ public class ProductAddPanel extends JPanel{
 	private JComboBox<ProductTypeEnum> typeCB;
 	private JComboBox<ProductStateEnum> stateCB;
 	
-	public ProductAddPanel(ShopController shopController, MainWindowChangedFiringSource listener){
+	public ProductAddPanel(ShopController shopController){
+		
+		MainWindowChangedFiringSource listener = MainWindowChangedFiringSource.getInstance();
+		
 		Dimension dimension = new Dimension(600,600);
 		this.setSize(dimension);
 		setLayout(null);

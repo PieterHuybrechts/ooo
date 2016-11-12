@@ -35,7 +35,9 @@ public class CustomerAddPanel extends JPanel{
 	
 	private Button okBtn;
 
-	public CustomerAddPanel(final ShopController shopController, MainWindowChangedFiringSource listener){
+	public CustomerAddPanel(final ShopController shopController){
+		
+		MainWindowChangedFiringSource listener = MainWindowChangedFiringSource.getInstance();
 		
 		Dimension dimension = new Dimension(600,600);
 		this.setSize(dimension);

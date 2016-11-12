@@ -65,6 +65,14 @@ public class Shop implements Subject{
 		}
 	}
 	
+	public void updateProduct(Product product) throws DomainException{
+		try {
+			db.updateProduct(product);
+		} catch (DbException e) {
+			throw new DomainException(e.getMessage());
+		}
+	}
+	
 	public void rentProduct(int id) throws DomainException{
 		Product p = getProduct(id);
 		p.rent();

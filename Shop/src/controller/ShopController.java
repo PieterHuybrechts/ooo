@@ -6,6 +6,7 @@ import domain.Customer;
 import domain.DomainException;
 import domain.Shop;
 import domain.products.Product;
+import domain.products.ProductFactory;
 import domain.products.producstates.ProductStateEnum;
 
 public class ShopController {
@@ -41,12 +42,17 @@ public class ShopController {
 		this.addProduct(className, i, title, state);
 	}
 	
-	public Product geProduct(int id) throws DomainException{
+	public Product getProduct(int id) throws DomainException{
 		return shop.getProduct(id);
 	}
 	
 	public List<Product> getAllProducts() throws DomainException{
 		return getShop().getAllProducts();
+	}
+	
+	public void updateProduct(String className,String id,String title) throws DomainException{
+		int i = Integer.parseInt(id);
+		shop.updateProduct(ProductFactory.createProduct(className, i, title, getProduct(i).getCurrentState()));
 	}
 	
 	//Customers

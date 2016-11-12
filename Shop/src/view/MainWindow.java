@@ -8,7 +8,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controller.event.MainWindowChangedFiringSource;
 import controller.event.WindowChangedService;
 import view.panels.ButtonPanel;
 
@@ -22,7 +21,7 @@ public class MainWindow extends JFrame implements WindowChangedService{
 	private JPanel contentPanel;
 	private JPanel viewPanel;
 	
-	public MainWindow(MainWindowChangedFiringSource listener){
+	public MainWindow(){
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] { 200, 600 };
 		gbl.rowHeights = new int[] { 0 };
@@ -31,7 +30,7 @@ public class MainWindow extends JFrame implements WindowChangedService{
 		
 		contentPanel = new JPanel();
 		contentPanel.setLayout(gbl);
-		buttonPanel = new ButtonPanel(listener);
+		buttonPanel = new ButtonPanel();
 		this.setButtonPanel(buttonPanel);
 		
 		this.setContentPane(contentPanel);

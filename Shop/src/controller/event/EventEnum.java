@@ -6,6 +6,7 @@ public enum EventEnum {
 	ADDCUSTOMERBUTTONEVENT("addCustomerButtonEvent"),
 	CANCELADDCUSTOMERBUTTONEVENT("cancelAddCustomerButtonEvent"),
 	OKADDCUSTOMERBUTTONEVENT("okAddCustomerButtonEvent"),
+	OKUPDATEPRODUCTEVENT("okUpdateProductEvent"),
 
 	PRODUCTSBUTTONEVENT("productsButtonEvent"),
 	ADDPRODUCTBUTTONEVENT("addProductButtonEvent"),

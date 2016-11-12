@@ -28,12 +28,14 @@ public class CustomersOverviewPanel extends JPanel{
 	private CustomersTableModel customersTblMdl;
 	private JTable customersTbl;
 	
-	public CustomersOverviewPanel(ShopController shopController,MainWindowChangedFiringSource listener) throws DomainException{
+	public CustomersOverviewPanel(ShopController shopController) throws DomainException{
 		super();
+		
+		MainWindowChangedFiringSource listener = MainWindowChangedFiringSource.getInstance();
 		
 		Dimension dimension = new Dimension(600,600);
 		this.setSize(dimension);
-		setLayout(null);		
+		setLayout(null);
 		
 		JLabel titleLbl = new JLabel("Customers");
 		titleLbl.setFont(new Font("Tahoma", Font.PLAIN, 25));

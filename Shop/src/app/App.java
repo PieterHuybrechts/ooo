@@ -18,10 +18,9 @@ public class App {
 		shop.addObserver(eMailService);
 		
 		ShopController shopController = new ShopController(shop);
+		MainWindowChangedFiringSource listener = MainWindowChangedFiringSource.getInstance(shopController);
 		
-		MainWindowChangedFiringSource listener = new MainWindowChangedFiringSource(shopController);
-		
-		MainWindow w = new MainWindow(listener);
+		MainWindow w = new MainWindow();
 		listener.addListener(w);
 	}
 	

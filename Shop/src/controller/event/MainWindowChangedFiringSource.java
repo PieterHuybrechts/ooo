@@ -18,10 +18,32 @@ import view.panels.ProductsOverviewPanel;
 public class MainWindowChangedFiringSource implements WindowChangedFiringService,ActionListener{
 	private List<WindowChangedService> listeners;
 	private ShopController shopController;
+	private static MainWindowChangedFiringSource instance;
 	
-	public MainWindowChangedFiringSource(ShopController shopController) {
+	private MainWindowChangedFiringSource() {
 		listeners = new ArrayList<WindowChangedService>();
-		this.shopController = shopController;
+	}
+	
+	public static MainWindowChangedFiringSource getInstance(){
+		if(instance==null){
+			instance = new MainWindowChangedFiringSource();
+		}
+		
+		return instance;
+	}
+	
+	public static MainWindowChangedFiringSource getInstance(ShopController shopController){
+		if(instance==null){
+			instance = new MainWindowChangedFiringSource();
+		}
+		
+		instance.setShopController(shopController);
+		
+		return instance;
+	}
+	
+	private void setShopController(ShopController controller){
+		this.shopController=controller;
 	}
 	
 	@Override
@@ -55,27 +77,28 @@ public class MainWindowChangedFiringSource implements WindowChangedFiringService
 			switch (eventEnum) {
 			case OKADDPRODUCTBUTTONEVENT:
 			case CANCELADDPRODUCTBUTTONEVENT:
+			case OKUPDATEPRODUCTEVENT:
 			case PRODUCTSBUTTONEVENT:
 				try{
-					fireChanged(new ProductsOverviewPanel(this.shopController,this));					
+					fireChanged(new ProductsOverviewPanel(this.shopController));					
 				}catch (DomainException e) {
 					JOptionPane.showMessageDialog(null, "Couldn't open the products window.","",JOptionPane.WARNING_MESSAGE);
 				}
 				break;
 			case ADDPRODUCTBUTTONEVENT:
-				fireChanged(new ProductAddPanel(this.shopController,this));
+				fireChanged(new ProductAddPanel(this.shopController));
 				break;
 			case CANCELADDCUSTOMERBUTTONEVENT:
 			case OKADDCUSTOMERBUTTONEVENT:
 			case CUSTOMERSBUTTONEVENT:
 				try {
-					fireChanged(new CustomersOverviewPanel(this.shopController,this));
+					fireChanged(new CustomersOverviewPanel(this.shopController));
 				} catch (DomainException e) {
 					JOptionPane.showMessageDialog(null, "Couldn't open the customers window.","",JOptionPane.WARNING_MESSAGE);
 				}
 				break;
 			case ADDCUSTOMERBUTTONEVENT:
-				fireChanged(new CustomerAddPanel(this.shopController,this));
+				fireChanged(new CustomerAddPanel(this.shopController));
 				break;
 			case QUITBUTTONEVENT:
 				System.exit(1);

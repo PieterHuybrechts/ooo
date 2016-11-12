@@ -2,6 +2,8 @@ package view.panels;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,6 +15,7 @@ import controller.ShopController;
 import controller.event.EventEnum;
 import controller.event.MainWindowChangedFiringSource;
 import domain.DomainException;
+import domain.products.Product;
 import view.custom.Button;
 import view.tableModels.ProductsTableModel;
 
@@ -26,7 +29,7 @@ public class ProductsOverviewPanel extends JPanel{
 	private ProductsTableModel productsTblMdl;
 	private JTable productsTbl;
 	
-	public ProductsOverviewPanel(ShopController shopController,MainWindowChangedFiringSource listener) throws DomainException{
+	public ProductsOverviewPanel(ShopController shopController) throws DomainException{
 		super();
 		Dimension dimension = new Dimension(600,600);
 		this.setSize(dimension);
@@ -52,15 +55,31 @@ public class ProductsOverviewPanel extends JPanel{
 		
 		productsTblMdl = new ProductsTableModel(shopController);
 		productsTbl = new JTable(productsTblMdl);
+		productsTbl.addMouseListener(new MouseListener(shopController));
 		scrollPane.setViewportView(productsTbl);
 		
 		Button addBtn = new Button("Add");
-		addBtn.addActionListener(listener);
+		addBtn.addActionListener(MainWindowChangedFiringSource.getInstance());
 		addBtn.setActionCommand(EventEnum.ADDPRODUCTBUTTONEVENT);
 		addBtn.setBounds(501, 566, 89, 23);
 		add(addBtn);
 		
 		productsTblMdl.updateTable();
 	}
-
+	
+	private class MouseListener extends MouseAdapter{
+		ShopController shopController;
+		
+		public MouseListener(ShopController shopController){
+			this.shopController = shopController;
+		}
+		
+		public void mousePressed(MouseEvent me){
+			int row = productsTbl.getSelectedRow();
+			Product product = productsTblMdl.getProductAtRow(row);
+			if(me.getClickCount() == 2){				
+				MainWindowChangedFiringSource.getInstance().fireChanged(new ProductInformationPanel(shopController,product));
+			}
+		}
+	}
 }
