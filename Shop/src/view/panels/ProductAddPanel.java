@@ -28,7 +28,6 @@ public class ProductAddPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JTextField idTF;
 	private JTextField titleTF;
 	private JComboBox<ProductTypeEnum> typeCB;
 	private JComboBox<ProductStateEnum> stateCB;
@@ -45,40 +44,32 @@ public class ProductAddPanel extends JPanel{
 		pageTitleLbl.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		pageTitleLbl.setBounds(10, 11, 580, 31);
 		add(pageTitleLbl);
-		
-		JLabel idLbl = new JLabel("Id:");
-		idLbl.setBounds(10, 52, 46, 14);
-		add(idLbl);
-		
-		idTF = new JTextField();
-		idTF.setBounds(88, 49, 104, 20);
-		add(idTF);
 
 		JLabel titleLbl = new JLabel("Title:");
-		titleLbl.setBounds(10, 76, 84, 14);
+		titleLbl.setBounds(10, 56, 84, 14);
 		add(titleLbl);
 		
 		titleTF = new JTextField();
-		titleTF.setBounds(88, 73, 104, 20);
+		titleTF.setBounds(88, 53, 104, 20);
 		add(titleTF);
 		titleTF.setColumns(10);
 		
 		JLabel typeLbl = new JLabel("Type:");
-		typeLbl.setBounds(10, 101, 46, 14);
+		typeLbl.setBounds(10, 81, 46, 14);
 		add(typeLbl);
 		
 		typeCB = new JComboBox<ProductTypeEnum>();
 		typeCB.setModel(new DefaultComboBoxModel<ProductTypeEnum>(ProductTypeEnum.values()));
-		typeCB.setBounds(88, 98, 104, 20);
+		typeCB.setBounds(88, 78, 104, 20);
 		add(typeCB);
 		
 		JLabel stateLbl = new JLabel("State");
-		stateLbl.setBounds(10, 126, 46, 14);
+		stateLbl.setBounds(10, 106, 46, 14);
 		add(stateLbl);
 		
 		stateCB = new JComboBox<ProductStateEnum>();
 		stateCB.setModel(new DefaultComboBoxModel<ProductStateEnum>(ProductStateEnum.values()));
-		stateCB.setBounds(88, 123, 104, 20);
+		stateCB.setBounds(88, 103, 104, 20);
 		add(stateCB);
 		
 		Button cancelBtn = new Button("Cancel");
@@ -110,7 +101,7 @@ public class ProductAddPanel extends JPanel{
 				ProductTypeEnum type = (ProductTypeEnum)typeCB.getSelectedItem();
 				String className = type.getClassName();
 				ProductStateEnum state = (ProductStateEnum)stateCB.getSelectedItem();
-				shopController.addProduct(className, idTF.getText() , titleTF.getText(), state);
+				shopController.addProduct(className, 0 , titleTF.getText(), state);
 				listener.actionPerformed(e);
 			} catch (DomainException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage(),"Warning",JOptionPane.WARNING_MESSAGE);

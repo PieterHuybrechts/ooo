@@ -42,7 +42,8 @@ public class DerbyDb implements Database {
 	private void createTables(){
 		try{
 			stmt = conn.createStatement();
-			stmt.execute("CREATE TABLE "+productsTableName+" (id INTEGER PRIMARY KEY, title VARCHAR(20) NOT NULL, class VARCHAR(40) NOT NULL, state VARCHAR(20) NOT NULL, time_stamp TIMESTAMP NOT NULL)");
+			stmt.execute("CREATE TABLE "+productsTableName+" (id INTEGER not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), title VARCHAR(20) NOT NULL, class VARCHAR(40) NOT NULL, state VARCHAR(20) NOT NULL, time_stamp TIMESTAMP NOT NULL)");
+			
 			stmt.close();			
 		}catch(SQLException e){
 			try {
@@ -52,7 +53,7 @@ public class DerbyDb implements Database {
 		
 		try{
 			stmt = conn.createStatement();
-			stmt.execute("CREATE TABLE "+customersTableName+" (id INTEGER PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), address VARCHAR(20), zip_code VARCHAR(4), city VARCHAR(20), email_address VARCHAR(50), subscribed BOOLEAN)");
+			stmt.execute("CREATE TABLE "+customersTableName+" (id INTEGER not null primary key GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), first_name VARCHAR(20), last_name VARCHAR(20), address VARCHAR(20), zip_code VARCHAR(4), city VARCHAR(20), email_address VARCHAR(50), subscribed BOOLEAN)");
 			stmt.close();
 		}catch(SQLException e){
 			try {
@@ -64,7 +65,7 @@ public class DerbyDb implements Database {
 	public void addProduct(Product p) throws DbException{
 			try{
 				stmt = conn.createStatement();
-				stmt.execute("INSERT INTO "+ productsTableName + " VALUES (" + p.getId() + ",'" + p.getTitle() + "','" + p.getClass().getName() + "','" + p.getCurrentState() + "', CURRENT_TIMESTAMP)");
+				stmt.execute("INSERT INTO "+ productsTableName + "(title,class,state,time_stamp) VALUES('" + p.getTitle() + "','" + p.getClass().getName() + "','" + p.getCurrentState() + "', CURRENT_TIMESTAMP)");
 				stmt.close();
 			}catch(SQLException e){
 				try {
@@ -166,7 +167,8 @@ public class DerbyDb implements Database {
 	public void addCustomer(Customer c) throws DbException {
 		try {
 			stmt = conn.createStatement();
-			stmt.execute("INSERT INTO "+ customersTableName + " VALUES (" + c.getId() + ",'" + c.getFirstName() + "','" + c.getLastName() + "','" + c.getAddress() + "','" + c.getZipCode() + "','" + c.getCity() + "','" + c.getEmailAddress() + "','" + c.isSubscribed() + "')");
+			//first_name VARCHAR(20), last_name VARCHAR(20), address VARCHAR(20), zip_code VARCHAR(4), city VARCHAR(20), email_address VARCHAR(50), subscribed BOOLEAN)");
+			stmt.execute("INSERT INTO "+ customersTableName +"(first_name,last_name,address,zip_code,city,email_address,subscribed)  VALUES ('" + c.getFirstName() + "','" + c.getLastName() + "','" + c.getAddress() + "','" + c.getZipCode() + "','" + c.getCity() + "','" + c.getEmailAddress() + "','" + c.isSubscribed() + "')");
 			stmt.close();
 			
 		} catch (SQLException e) {
