@@ -72,14 +72,13 @@ public class DerbyDb implements Database {
 	public void addProduct(Product p) throws DbException {
 
 		try {
-			String sql = "INSERT INTO " + productsTableName + "(title,class,state,time_stamp) VALUES(?,?,?,CURRENT_TIMESTAMP)";
+			String sql = "INSERT INTO " + productsTableName
+					+ "(title,class,state,time_stamp) VALUES(?,?,?,CURRENT_TIMESTAMP)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, p.getTitle());
 			stmt.setString(2, p.getClass().getName());
 			stmt.setString(3, p.getCurrentState().toString());
 			stmt.execute();
-			//stmt.execute("INSERT INTO " + productsTableName + "(title,class,state,time_stamp) VALUES('" + p.getTitle()
-				//	+ "','" + p.getClass().getName() + "','" + p.getCurrentState() + "', CURRENT_TIMESTAMP)");
 			stmt.close();
 		} catch (SQLException e) {
 			try {
@@ -97,7 +96,7 @@ public class DerbyDb implements Database {
 		try {
 			String sql = "SELECT * FROM " + productsTableName + " WHERE id= ?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, ""+id);
+			stmt.setString(1, "" + id);
 			ResultSet set = stmt.executeQuery();
 
 			set.next();
@@ -112,8 +111,9 @@ public class DerbyDb implements Database {
 		} catch (SQLException e) {
 			try {
 				stmt.close();
-			} catch (SQLException e1) {}
-			
+			} catch (SQLException e1) {
+			}
+
 			throw new DbException(e.getMessage());
 		} catch (DomainException e) {
 			p = null;
@@ -154,8 +154,7 @@ public class DerbyDb implements Database {
 		try {
 			String sql = "DELETE FROM " + productsTableName + " WHERE id=?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, id+"");
-			//stmt.execute("DELETE FROM " + productsTableName + " WHERE id=" + id);
+			stmt.setString(1, id + "");
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -170,15 +169,12 @@ public class DerbyDb implements Database {
 
 	public void updateProduct(Product p) throws DbException {
 		try {
-			String sql = "UPDATE "+productsTableName+" SET title=?,state=?,class=? WHERE id=?";
+			String sql = "UPDATE " + productsTableName + " SET title=?,state=?,class=? WHERE id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, p.getTitle());
 			stmt.setString(2, p.getCurrentState().toString());
 			stmt.setString(3, p.getClass().getName());
 			stmt.setInt(4, p.getId());
-			
-			//String qry = "UPDATE " + productsTableName + " SET state='" + p.getCurrentState() + "',class='"
-				//	+ p.getClass().getName() + "',title='" + p.getTitle() + "' WHERE id=" + p.getId();
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -192,21 +188,7 @@ public class DerbyDb implements Database {
 	}
 
 	public void addCustomer(Customer c) throws DbException {
-		/*try {
-			stmt = conn.createStatement();
-			//first_name VARCHAR(20), last_name VARCHAR(20), address VARCHAR(20), zip_code VARCHAR(4), city VARCHAR(20), email_address VARCHAR(50), subscribed BOOLEAN)");
-			stmt.execute("INSERT INTO "+ customersTableName +"(first_name,last_name,address,zip_code,city,email_address,subscribed)  VALUES ('" + c.getFirstName() + "','" + c.getLastName() + "','" + c.getAddress() + "','" + c.getZipCode() + "','" + c.getCity() + "','" + c.getEmailAddress() + "','" + c.isSubscribed() + "')");
-			stmt.close();
-			
-		} catch (SQLException e) {
-			try {
-				stmt.close();
-			} catch (SQLException e1) {}
-			throw new DbException(MagicStrings.CUSTOMEREXISTINGINDB.getError()+c.getId());
-		}*/
-		
-		
-		try{
+		try {
 			String sql = "insert into person(first_name, last_name, address, zip_code, city, email_address ,subscribed) values(?,?,?,?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, c.getFirstName());
@@ -218,13 +200,13 @@ public class DerbyDb implements Database {
 			stmt.setBoolean(7, c.isSubscribed());
 			stmt.execute();
 			stmt.close();
-		}catch(SQLException e){
+		} catch (SQLException e) {
 			try {
 				stmt.close();
-			} catch (SQLException e1) {}
-			throw new DbException(MagicStrings.CUSTOMEREXISTINGINDB.getError()+c.getId());
+			} catch (SQLException e1) {
+			}
+			throw new DbException(MagicStrings.CUSTOMEREXISTINGINDB.getError() + c.getId());
 		}
-		
 	}
 
 	public Customer getCustomer(int id) throws DbException {
@@ -233,7 +215,7 @@ public class DerbyDb implements Database {
 			String sql = "SELECT * FROM " + customersTableName + " WHERE id=?";
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
-			
+
 			ResultSet set = stmt.executeQuery();
 			while (set.next()) {
 				int i = Integer.parseInt(set.getString("id"));
@@ -344,7 +326,8 @@ public class DerbyDb implements Database {
 	public Product getLastAddedProduct() throws DbException {
 		Product p = null;
 		try {
-			String sql = "SELECT * FROM "+productsTableName+" WHERE time_stamp IN (SELECT max(time_stamp) FROM "+productsTableName+")";
+			String sql = "SELECT * FROM " + productsTableName + " WHERE time_stamp IN (SELECT max(time_stamp) FROM "
+					+ productsTableName + ")";
 			stmt = conn.prepareStatement(sql);
 			stmt.executeQuery();
 			ResultSet set = stmt.executeQuery();
